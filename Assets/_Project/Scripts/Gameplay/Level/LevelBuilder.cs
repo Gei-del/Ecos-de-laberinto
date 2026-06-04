@@ -18,6 +18,11 @@ namespace EcosDelLaberinto.Gameplay.Level
         private static readonly Color WallColor = new(0.30f, 0.33f, 0.45f);
         private static readonly Color CrystalColor = new(0.4f, 0.9f, 1f);
         private static readonly Color BlockColor = new(0.7f, 0.55f, 0.3f);
+        private static readonly Color VoidColor = new(0.02f, 0.02f, 0.04f);
+        private static readonly Color PlatformColor = new(0.45f, 0.75f, 0.85f);
+
+        private const char VoidSymbol = '~';
+        private const char PlatformSymbol = 'M';
 
         private readonly GameConfig _config;
         private readonly IEventBus _eventBus;
@@ -46,18 +51,28 @@ namespace EcosDelLaberinto.Gameplay.Level
                     var cell = new Vector2Int(x, y);
                     var symbol = data.CellAt(x, y);
                     var isWall = symbol == '#';
+                    var isVoid = symbol == VoidSymbol || symbol == PlatformSymbol;
 
                     grid.SetWall(cell, isWall);
-                    CreateTile(root, grid, cell, isWall ? WallColor : FloorColor, isWall ? 0 : -1);
+
+                    var tileColor = isWall ? WallColor : isVoid ? VoidColor : FloorColor;
+                    CreateTile(root, grid, cell, tileColor, isWall ? 0 : -1);
 
                     if (isWall)
                     {
                         continue;
                     }
 
+                    if (isVoid)
+                    {
+                        grid.SetVoid(cell);
+                    }
+
                     SpawnEntity(built, root, grid, data, cell, symbol);
                 }
             }
+
+            BuildPlatforms(built, root, grid, data);
 
             // AND-link every activator to every door: the signature "hold all buttons" puzzle.
             foreach (var door in built.Doors)
@@ -205,6 +220,70 @@ namespace EcosDelLaberinto.Gameplay.Level
             var block = sr.gameObject.AddComponent<PushableBlock>();
             block.Initialize(grid, cell);
             return block;
+        }
+
+        private void BuildPlatforms(BuiltLevel built, Transform root, LevelGrid grid, LevelData data)
+        {
+            var index = 0;
+            foreach (var home in data.FindAll(PlatformSymbol))
+            {
+                var path = BuildPlatformPath(data, home);
+                var platform = CreatePlatform(root, grid, home, index);
+                var step = _config != null ? _config.PlatformStepTicks : 4;
+                platform.Initialize($"{data.Id}_m{index}", path, step, grid);
+                built.Platforms.Add(platform);
+                index++;
+            }
+        }
+
+        private MovingPlatform CreatePlatform(Transform root, LevelGrid grid, Vector2Int cell, int index)
+        {
+            var sr = CreateTile(root, grid, cell, PlatformColor, 3);
+            sr.sprite = PrimitiveSprites.Square();
+            sr.gameObject.name = $"Platform_{index}";
+            var platform = sr.gameObject.AddComponent<MovingPlatform>();
+            platform.BindRenderer(sr);
+            return platform;
+        }
+
+        private static System.Collections.Generic.List<Vector2Int> BuildPlatformPath(
+            LevelData data, Vector2Int home)
+        {
+            bool IsTrack(Vector2Int c)
+            {
+                var s = data.CellAt(c.x, c.y);
+                return s == VoidSymbol || s == PlatformSymbol;
+            }
+
+            var left = home;
+            while (IsTrack(left + Vector2Int.left)) left += Vector2Int.left;
+            var right = home;
+            while (IsTrack(right + Vector2Int.right)) right += Vector2Int.right;
+            var hLen = right.x - left.x + 1;
+
+            var down = home;
+            while (IsTrack(down + Vector2Int.down)) down += Vector2Int.down;
+            var up = home;
+            while (IsTrack(up + Vector2Int.up)) up += Vector2Int.up;
+            var vLen = up.y - down.y + 1;
+
+            var path = new System.Collections.Generic.List<Vector2Int>();
+            if (hLen >= vLen)
+            {
+                for (var x = left.x; x <= right.x; x++)
+                {
+                    path.Add(new Vector2Int(x, home.y));
+                }
+            }
+            else
+            {
+                for (var y = down.y; y <= up.y; y++)
+                {
+                    path.Add(new Vector2Int(home.x, y));
+                }
+            }
+
+            return path;
         }
 
         private static GridDirection ChooseLaserDirection(LevelGrid grid, LevelData data, Vector2Int cell)

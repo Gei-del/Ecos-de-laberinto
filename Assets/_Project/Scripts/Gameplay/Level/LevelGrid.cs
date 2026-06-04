@@ -12,6 +12,7 @@ namespace EcosDelLaberinto.Gameplay.Level
     {
         private readonly bool[,] _walls;
         private readonly HashSet<Vector2Int> _dynamicBlockers = new();
+        private readonly HashSet<Vector2Int> _voids = new();
         private readonly float _cellSize;
         private readonly Vector3 _origin;
 
@@ -50,6 +51,22 @@ namespace EcosDelLaberinto.Gameplay.Level
         }
 
         public bool IsDynamicallyBlocked(Vector2Int cell) => _dynamicBlockers.Contains(cell);
+
+        /// <summary>
+        /// Marks a cell as a temporal void (a pit). Voids are non-walkable by default — only a
+        /// moving platform sitting on the cell makes it passable — so they are registered as
+        /// dynamic blockers and platforms unblock/re-block them as they travel.
+        /// </summary>
+        public void SetVoid(Vector2Int cell)
+        {
+            if (InBounds(cell))
+            {
+                _voids.Add(cell);
+                _dynamicBlockers.Add(cell);
+            }
+        }
+
+        public bool IsVoid(Vector2Int cell) => _voids.Contains(cell);
 
         /// <summary>Walkable = inside bounds, not a wall and not currently blocked.</summary>
         public bool IsWalkable(Vector2Int cell) =>
