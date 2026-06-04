@@ -96,6 +96,17 @@ namespace EcosDelLaberinto.Core.Events
         }
     }
 
+    public readonly struct RelicUnlockedEvent : IGameEvent
+    {
+        public readonly string RelicId;
+        public readonly string DisplayName;
+        public RelicUnlockedEvent(string relicId, string displayName)
+        {
+            RelicId = relicId;
+            DisplayName = displayName;
+        }
+    }
+
     public readonly struct GameSavedEvent : IGameEvent
     {
     }

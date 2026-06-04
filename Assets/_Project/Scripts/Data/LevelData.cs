@@ -21,6 +21,8 @@ namespace EcosDelLaberinto.Data
     ///   'L'  Laser emitter (lethal beam, blocked by actors/blocks)
     ///   'O'  Pushable block
     ///   'F'  Fragment pickup (soft currency)
+    ///   '~'  Temporal void (deadly pit, only crossable on a moving platform)
+    ///   'M'  Moving platform home cell (travels along its line of '~' cells)
     /// Linking of buttons/doors is done by index order within the same level (see LevelBuilder).
     /// </summary>
     [CreateAssetMenu(menuName = "Ecos/Level", fileName = "Level_")]
@@ -52,6 +54,10 @@ namespace EcosDelLaberinto.Data
 
         [Header("Tutorial")]
         [TextArea] public string TutorialHint;
+
+        [Header("Rewards")]
+        [Tooltip("Relic id granted the first time this level is completed (empty = none).")]
+        public string GrantsRelicId = string.Empty;
 
         public int Height => Rows?.Length ?? 0;
         public int Width

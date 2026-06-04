@@ -49,6 +49,7 @@ namespace EcosDelLaberinto.Gameplay.Level
         private ICharacterAbility _ability;
         private int _echoLifetimeTicks;
         private int _abilityCooldownTicks;
+        private int _maxEchoes;
 
         private int _deaths;
         private int _loopIndex;
@@ -99,6 +100,8 @@ namespace EcosDelLaberinto.Gameplay.Level
                 ? Mathf.RoundToInt(character.AbilityCooldown * _config.TicksPerSecond)
                 : 0;
 
+            ApplyRelicBonuses();
+
             _echoContainer = new GameObject("Echoes").transform;
             _echoContainer.SetParent(_root, false);
             _echoFactory = new EchoFactory(_echoContainer, _built.Grid);
@@ -120,6 +123,12 @@ namespace EcosDelLaberinto.Gameplay.Level
             if (!_active || _completed || _needsRestart)
             {
                 return;
+            }
+
+            // 0. Moving platforms (deterministic; may carry the live player before it steps).
+            foreach (var p in _built.Platforms)
+            {
+                p.ApplyTick(tick, _player);
             }
 
             // 1. Echoes replay.
@@ -210,6 +219,47 @@ namespace EcosDelLaberinto.Gameplay.Level
 
         // -----------------------------------------------------------------------------------------
 
+        private void ApplyRelicBonuses()
+        {
+            _maxEchoes = _config.MaxEchoes;
+            var relics = _save?.Data?.UnlockedRelics;
+            if (relics == null)
+            {
+                return;
+            }
+
+            if (relics.Contains(RelicCatalog.NucleoTemporal))
+            {
+                _maxEchoes += 1;
+            }
+
+            if (relics.Contains(RelicCatalog.MemoriaInfinita))
+            {
+                _echoLifetimeTicks = Mathf.RoundToInt(_echoLifetimeTicks * 1.5f);
+            }
+
+            if (relics.Contains(RelicCatalog.CronometroCuantico))
+            {
+                _abilityCooldownTicks = Mathf.Max(0, Mathf.RoundToInt(_abilityCooldownTicks * 0.6f));
+            }
+        }
+
+        private void GrantRelicIfAny()
+        {
+            var relicId = _level != null ? _level.GrantsRelicId : null;
+            if (string.IsNullOrEmpty(relicId))
+            {
+                return;
+            }
+
+            var relics = _save.Data.UnlockedRelics;
+            if (!relics.Contains(relicId))
+            {
+                relics.Add(relicId);
+                _events.Publish(new RelicUnlockedEvent(relicId, RelicCatalog.DisplayName(relicId)));
+            }
+        }
+
         private void BeginLoop()
         {
             // Reset world state for the new loop.
@@ -218,6 +268,7 @@ namespace EcosDelLaberinto.Gameplay.Level
             foreach (var d in _built.Doors) d.ResetState();
             foreach (var l in _built.Lasers) l.ResetState();
             foreach (var block in _built.Blocks) block.ResetToSpawn();
+            foreach (var p in _built.Platforms) p.ResetState();
             _resolver.RebuildBlockIndex(_built.Blocks);
 
             // Rebuild echoes from recordings (respecting the simultaneous cap).
@@ -243,7 +294,7 @@ namespace EcosDelLaberinto.Gameplay.Level
 
             _echoes.Clear();
 
-            var start = Mathf.Max(0, _recordings.Count - _config.MaxEchoes);
+            var start = Mathf.Max(0, _recordings.Count - _maxEchoes);
             for (var i = start; i < _recordings.Count; i++)
             {
                 var echo = _echoFactory.Create(_recordings[i], _echoLifetimeTicks, i);
@@ -322,6 +373,7 @@ namespace EcosDelLaberinto.Gameplay.Level
 
             PersistProgress(result);
             _economy.Add(result.FragmentsEarned);
+            GrantRelicIfAny();
             _save.Save();
 
             GameLogger.Info($"Level {_level.Id} complete: {result.Stars}* in {result.TimeSeconds:0.0}s, " +

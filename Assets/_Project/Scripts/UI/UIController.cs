@@ -255,6 +255,7 @@ namespace EcosDelLaberinto.UI
             });
             _events.Subscribe<FragmentsChangedEvent>(e => UpdateFragments(e.Total));
             _events.Subscribe<AchievementUnlockedEvent>(e => ShowToast($"\u2605 Logro: {e.DisplayName}"));
+            _events.Subscribe<RelicUnlockedEvent>(e => ShowToast($"\u25C8 Reliquia: {e.DisplayName}"));
         }
 
         private int _deathsCounter;

@@ -24,6 +24,10 @@ namespace EcosDelLaberinto.Data
         [Tooltip("Base lifetime of an echo in seconds before the character multiplier.")]
         public float BaseEchoLifetimeSeconds = 30f;
 
+        [Header("Moving platforms")]
+        [Tooltip("Ticks a moving platform spends on each cell before advancing to the next.")]
+        public int PlatformStepTicks = 4;
+
         [Header("Scoring")]
         public int FragmentsPerStar = 25;
         public int FragmentsPerCrystal = 10;

@@ -18,6 +18,7 @@ namespace EcosDelLaberinto.Gameplay.Level
         public readonly List<LaserEmitter> Lasers = new();
         public readonly List<Crystal> Crystals = new();
         public readonly List<PushableBlock> Blocks = new();
+        public readonly List<MovingPlatform> Platforms = new();
 
         public int CrystalsTotal => Crystals.Count;
 
