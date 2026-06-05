@@ -1,0 +1,104 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UIToolkit/Theme/EcosTheme.uss" />
+    <ui:VisualElement name="Shop" class="screen">
+        <ui:VisualElement class="bg-grid" picking-mode="Ignore" />
+        <ui:VisualElement class="bg-vignette" picking-mode="Ignore" />
+
+        <ui:VisualElement class="fill" style="padding-left: 48px; padding-right: 48px; padding-top: 24px; padding-bottom: 24px;">
+            <!-- cabecera -->
+            <ui:VisualElement class="row" style="height: 44px;">
+                <ui:Button name="BtnBack" class="row grow" style="background-color: rgba(0,0,0,0); border-width: 0; justify-content: flex-start;">
+                    <ui:VisualElement style="width: 16px; height: 16px; margin-right: 8px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/chevron-left.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                    <ui:Label text="VOLVER" class="muted" style="font-size: 13px; letter-spacing: 2px;" />
+                </ui:Button>
+                <ui:VisualElement class="chip">
+                    <ui:VisualElement style="width: 18px; height: 18px; margin-right: 8px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/coin.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(251,191,36);" />
+                    <ui:Label name="Balance" text="3,500" class="coin-amount" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:Label text="TIENDA" class="screen-title" style="margin-bottom: 18px;" />
+
+            <!-- pestañas -->
+            <ui:VisualElement class="row" style="margin-bottom: 18px;">
+                <ui:Button name="TabFeatured" text="DESTACADOS" class="tab tab--active" />
+                <ui:Button name="TabFragments" text="FRAGMENTOS" class="tab" />
+                <ui:Button name="TabSkins" text="ASPECTOS" class="tab" />
+                <ui:Button name="TabUpgrades" text="MEJORAS" class="tab" />
+            </ui:VisualElement>
+
+            <!-- rejilla de items -->
+            <ui:ScrollView style="flex-grow: 1;">
+                <ui:VisualElement style="flex-direction: row; flex-wrap: wrap; justify-content: center;">
+
+                    <ui:VisualElement name="Item0" class="card" style="width: 250px; height: 290px; margin: 10px;">
+                        <ui:Label text="-33%" class="badge" />
+                        <ui:VisualElement class="center" style="height: 110px; background-color: rgba(34,211,238,0.08); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                            <ui:VisualElement style="width: 56px; height: 56px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/gem.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(125,249,255);" />
+                        </ui:VisualElement>
+                        <ui:Label text="PACK CRISTAL" class="card-title" style="font-size: 17px; margin-top: 10px;" />
+                        <ui:Label text="+500 Fragmentos Temporales" class="card-desc" />
+                        <ui:VisualElement class="grow" />
+                        <ui:VisualElement class="row" style="align-items: flex-end; margin-bottom: 8px;">
+                            <ui:Label text="600" class="price-old" />
+                            <ui:Label text="400" class="price-new" />
+                        </ui:VisualElement>
+                        <ui:Button name="Buy0" text="COMPRAR" class="btn" style="font-size: 13px; padding-top: 8px; padding-bottom: 8px;" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="Item1" class="card" style="width: 250px; height: 290px; margin: 10px;">
+                        <ui:VisualElement class="center" style="height: 110px; background-color: rgba(34,211,238,0.08); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                            <ui:VisualElement style="width: 56px; height: 56px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/person.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(125,249,255);" />
+                        </ui:VisualElement>
+                        <ui:Label text="ASPECTO: NOVA NEÓN" class="card-title" style="font-size: 17px; margin-top: 10px;" />
+                        <ui:Label text="Skin holográfica para Nova" class="card-desc" />
+                        <ui:VisualElement class="grow" />
+                        <ui:VisualElement class="row" style="align-items: flex-end; margin-bottom: 8px;">
+                            <ui:Label text="1,200" class="price-new" />
+                        </ui:VisualElement>
+                        <ui:Button name="Buy1" text="COMPRAR" class="btn" style="font-size: 13px; padding-top: 8px; padding-bottom: 8px;" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="Item2" class="card card--purple" style="width: 250px; height: 290px; margin: 10px;">
+                        <ui:Label text="-50%" class="badge" />
+                        <ui:VisualElement class="center" style="height: 110px; background-color: rgba(168,85,247,0.12); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                            <ui:VisualElement style="width: 56px; height: 56px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/person.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(196,181,253);" />
+                        </ui:VisualElement>
+                        <ui:Label text="ASPECTO: ATLAS VOID" class="card-title" style="font-size: 17px; margin-top: 10px; color: rgb(196,181,253);" />
+                        <ui:Label text="Skin legendaria del vacío" class="card-desc" />
+                        <ui:VisualElement class="grow" />
+                        <ui:VisualElement class="row" style="align-items: flex-end; margin-bottom: 8px;">
+                            <ui:Label text="2,000" class="price-old" />
+                            <ui:Label text="1,000" class="price-new" />
+                        </ui:VisualElement>
+                        <ui:Button name="Buy2" text="COMPRAR" class="btn" style="font-size: 13px; padding-top: 8px; padding-bottom: 8px;" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="Item3" class="card" style="width: 250px; height: 290px; margin: 10px;">
+                        <ui:VisualElement class="center" style="height: 110px; background-color: rgba(34,211,238,0.08); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                            <ui:VisualElement style="width: 56px; height: 56px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/orbit.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(52,211,153);" />
+                        </ui:VisualElement>
+                        <ui:Label text="NÚCLEO TEMPORAL" class="card-title" style="font-size: 17px; margin-top: 10px;" />
+                        <ui:Label text="Reliquia: +1 eco simultáneo" class="card-desc" />
+                        <ui:VisualElement class="grow" />
+                        <ui:VisualElement class="row" style="align-items: flex-end; margin-bottom: 8px;">
+                            <ui:Label text="3,000" class="price-new" />
+                        </ui:VisualElement>
+                        <ui:Button name="Buy3" text="COMPRAR" class="btn" style="font-size: 13px; padding-top: 8px; padding-bottom: 8px;" />
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+
+                <!-- banner de oferta especial -->
+                <ui:VisualElement class="card card--gold row" style="margin: 10px; align-items: center; padding-top: 18px; padding-bottom: 18px;">
+                    <ui:VisualElement style="width: 48px; height: 48px; margin-right: 18px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/gift.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(251,191,36);" />
+                    <ui:VisualElement class="grow">
+                        <ui:Label text="OFERTA ESPECIAL · PACK CRONOS" class="card-title" style="font-size: 18px; color: rgb(251,191,36);" />
+                        <ui:Label text="Todos los aspectos al -40% · Termina en 23:59:59" class="card-desc" style="margin-top: 2px;" />
+                    </ui:VisualElement>
+                    <ui:Button name="BuyOffer" text="COMPRAR" class="btn" style="border-left-color: rgb(251,191,36); border-right-color: rgb(251,191,36); border-top-color: rgb(251,191,36); border-bottom-color: rgb(251,191,36); color: rgb(251,191,36);" />
+                </ui:VisualElement>
+            </ui:ScrollView>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

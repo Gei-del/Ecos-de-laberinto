@@ -1,0 +1,586 @@
+/* ============================================================================
+   ECOS DEL LABERINTO: CRONOFRAGMENTOS — Sistema de diseño (UI Toolkit / USS)
+   Estética: sci-fi futurista, neón cian, paneles holográficos sobre vacío oscuro.
+   Replica del diseño oficial de V0. NO simplificar.
+   ----------------------------------------------------------------------------
+   Tokens en :root (usar con var(--token)). Componentes reutilizables abajo.
+   ============================================================================ */
+
+:root {
+    /* --- Paleta --- */
+    --bg-0: rgb(5, 7, 13);
+    --bg-1: rgb(8, 12, 22);
+    --bg-2: rgb(12, 18, 30);
+
+    --cyan: rgb(34, 211, 238);
+    --cyan-bright: rgb(125, 249, 255);
+    --cyan-soft: rgba(45, 212, 238, 0.55);
+    --cyan-faint: rgba(45, 212, 238, 0.12);
+
+    --green: rgb(52, 211, 153);
+    --green-dim: rgb(31, 158, 118);
+
+    --amber: rgb(251, 191, 36);
+    --red: rgb(239, 68, 68);
+    --purple: rgb(168, 85, 247);
+
+    --text: rgb(215, 238, 246);
+    --text-dim: rgb(138, 161, 178);
+    --text-mut: rgb(95, 115, 132);
+
+    /* --- Superficies holográficas --- */
+    --panel-fill: rgba(12, 20, 34, 0.66);
+    --panel-fill-strong: rgba(14, 24, 40, 0.86);
+    --panel-border: rgba(45, 212, 238, 0.40);
+    --panel-border-soft: rgba(45, 212, 238, 0.18);
+
+    /* --- Radios --- */
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 14px;
+    --r-pill: 999px;
+
+    /* --- Glow (text-shadow) --- */
+    --glow-cyan: 0 0 18px rgba(45, 212, 238, 0.85);
+    --glow-green: 0 0 14px rgba(52, 211, 153, 0.7);
+}
+
+/* ============================ Tipografía ============================ */
+
+.font-display {
+    -unity-font: url("project://database/Assets/_Project/UIToolkit/Fonts/Orbitron.ttf");
+    -unity-font-definition: initial;
+}
+
+.font-body {
+    -unity-font: url("project://database/Assets/_Project/UIToolkit/Fonts/Rajdhani-SemiBold.ttf");
+    -unity-font-definition: initial;
+}
+
+/* ============================ Lienzo / fondo ============================ */
+
+.screen {
+    flex-grow: 1;
+    background-color: var(--bg-0);
+    -unity-font: url("project://database/Assets/_Project/UIToolkit/Fonts/Rajdhani-SemiBold.ttf");
+    -unity-font-definition: initial;
+    color: var(--text);
+}
+
+/* capa de rejilla holográfica (se repite) */
+.bg-grid {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("project://database/Assets/_Project/UIToolkit/Theme/grid_tile.png");
+    background-repeat: repeat;
+    background-size: 48px 48px;
+    opacity: 0.9;
+}
+
+/* viñeta radial para dar profundidad */
+.bg-vignette {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("project://database/Assets/_Project/UIToolkit/Theme/vignette.png");
+    -unity-background-scale-mode: stretch-to-fill;
+}
+
+.fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* ============================ Títulos ============================ */
+
+.title-xl {
+    -unity-font: url("project://database/Assets/_Project/UIToolkit/Fonts/Orbitron.ttf");
+    -unity-font-definition: initial;
+    font-size: 64px;
+    -unity-font-style: bold;
+    color: var(--cyan-bright);
+    letter-spacing: 6px;
+    text-shadow: 0 0 22px rgba(45, 212, 238, 0.9);
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+}
+
+.title-sub {
+    -unity-font: url("project://database/Assets/_Project/UIToolkit/Fonts/Orbitron.ttf");
+    -unity-font-definition: initial;
+    font-size: 22px;
+    color: var(--green);
+    letter-spacing: 16px;
+    -unity-text-align: middle-center;
+    text-shadow: 0 0 14px rgba(52, 211, 153, 0.6);
+}
+
+.screen-title {
+    -unity-font: url("project://database/Assets/_Project/UIToolkit/Fonts/Orbitron.ttf");
+    -unity-font-definition: initial;
+    font-size: 34px;
+    -unity-font-style: bold;
+    color: var(--cyan-bright);
+    letter-spacing: 4px;
+    text-shadow: 0 0 18px rgba(45, 212, 238, 0.85);
+    -unity-text-align: middle-center;
+}
+
+/* ============================ Paneles holográficos ============================ */
+
+.panel {
+    background-color: var(--panel-fill);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: var(--panel-border);
+    border-right-color: var(--panel-border);
+    border-top-color: var(--panel-border);
+    border-bottom-color: var(--panel-border);
+    border-top-left-radius: var(--r-lg);
+    border-top-right-radius: var(--r-lg);
+    border-bottom-left-radius: var(--r-lg);
+    border-bottom-right-radius: var(--r-lg);
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+
+.panel--soft {
+    border-left-color: var(--panel-border-soft);
+    border-right-color: var(--panel-border-soft);
+    border-top-color: var(--panel-border-soft);
+    border-bottom-color: var(--panel-border-soft);
+}
+
+/* ============================ Botones de menú (fila icono + texto) ============================ */
+
+.menu-btn {
+    flex-direction: row;
+    align-items: center;
+    height: 60px;
+    margin-top: 10px;
+    padding-left: 18px;
+    padding-right: 18px;
+    background-color: rgba(10, 18, 30, 0.55);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: var(--panel-border-soft);
+    border-right-color: var(--panel-border-soft);
+    border-top-color: var(--panel-border-soft);
+    border-bottom-color: var(--panel-border-soft);
+    border-top-left-radius: var(--r-md);
+    border-top-right-radius: var(--r-md);
+    border-bottom-left-radius: var(--r-md);
+    border-bottom-right-radius: var(--r-md);
+    transition-property: background-color, border-color, scale;
+    transition-duration: 0.14s;
+}
+
+.menu-btn:hover {
+    background-color: rgba(20, 40, 60, 0.7);
+    border-left-color: var(--cyan-soft);
+    border-right-color: var(--cyan-soft);
+    border-top-color: var(--cyan-soft);
+    border-bottom-color: var(--cyan-soft);
+    scale: 1.01 1.01;
+}
+
+.menu-btn--selected {
+    background-color: rgba(20, 52, 70, 0.8);
+    border-left-color: var(--cyan);
+    border-right-color: var(--cyan);
+    border-top-color: var(--cyan);
+    border-bottom-color: var(--cyan);
+}
+
+.menu-btn__icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 14px;
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--cyan);
+}
+
+.menu-btn__label {
+    -unity-font: url("project://database/Assets/_Project/UIToolkit/Fonts/Orbitron.ttf");
+    -unity-font-definition: initial;
+    font-size: 16px;
+    color: var(--cyan-bright);
+    letter-spacing: 2px;
+    flex-grow: 1;
+}
+
+.menu-btn__suffix {
+    width: 18px;
+    height: 18px;
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--cyan-soft);
+}
+
+/* ============================ Botón de acción (outline neón) ============================ */
+
+.btn {
+    -unity-font: url("project://database/Assets/_Project/UIToolkit/Fonts/Orbitron.ttf");
+    -unity-font-definition: initial;
+    font-size: 16px;
+    letter-spacing: 3px;
+    color: var(--cyan-bright);
+    background-color: rgba(20, 48, 64, 0.5);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: var(--cyan);
+    border-right-color: var(--cyan);
+    border-top-color: var(--cyan);
+    border-bottom-color: var(--cyan);
+    border-top-left-radius: var(--r-md);
+    border-top-right-radius: var(--r-md);
+    border-bottom-left-radius: var(--r-md);
+    border-bottom-right-radius: var(--r-md);
+    padding-left: 28px;
+    padding-right: 28px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    transition-property: background-color, scale;
+    transition-duration: 0.14s;
+}
+
+.btn:hover {
+    background-color: rgba(34, 211, 238, 0.22);
+    scale: 1.03 1.03;
+}
+
+.btn:active {
+    scale: 0.98 0.98;
+}
+
+.btn--ghost {
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: var(--panel-border-soft);
+    border-right-color: var(--panel-border-soft);
+    border-top-color: var(--panel-border-soft);
+    border-bottom-color: var(--panel-border-soft);
+    color: var(--text-dim);
+}
+
+.btn--disabled {
+    border-left-color: var(--text-mut);
+    border-right-color: var(--text-mut);
+    border-top-color: var(--text-mut);
+    border-bottom-color: var(--text-mut);
+    color: var(--text-mut);
+    background-color: rgba(20, 28, 38, 0.5);
+}
+
+/* botón circular del carrusel */
+.carousel-arrow {
+    width: 48px;
+    height: 48px;
+    border-top-left-radius: var(--r-pill);
+    border-top-right-radius: var(--r-pill);
+    border-bottom-left-radius: var(--r-pill);
+    border-bottom-right-radius: var(--r-pill);
+    background-color: rgba(12, 22, 36, 0.7);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: var(--panel-border);
+    border-right-color: var(--panel-border);
+    border-top-color: var(--panel-border);
+    border-bottom-color: var(--panel-border);
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--cyan);
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-arrow:hover {
+    background-color: rgba(34, 211, 238, 0.2);
+}
+
+/* ============================ Barra de estadística / progreso ============================ */
+
+.stat-row {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.stat-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--cyan);
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    width: 92px;
+}
+
+.bar-track {
+    flex-grow: 1;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-top-left-radius: var(--r-pill);
+    border-top-right-radius: var(--r-pill);
+    border-bottom-left-radius: var(--r-pill);
+    border-bottom-right-radius: var(--r-pill);
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 8px;
+    background-color: var(--cyan);
+    border-top-left-radius: var(--r-pill);
+    border-top-right-radius: var(--r-pill);
+    border-bottom-left-radius: var(--r-pill);
+    border-bottom-right-radius: var(--r-pill);
+}
+
+.bar-fill--green {
+    background-color: var(--green);
+}
+
+.stat-value {
+    width: 34px;
+    font-size: 13px;
+    color: var(--text);
+    -unity-text-align: middle-right;
+    margin-left: 8px;
+}
+
+/* ============================ Badges ============================ */
+
+.badge {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: var(--red);
+    color: white;
+    font-size: 12px;
+    -unity-font-style: bold;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-top-left-radius: var(--r-sm);
+    border-top-right-radius: var(--r-sm);
+    border-bottom-left-radius: var(--r-sm);
+    border-bottom-right-radius: var(--r-sm);
+}
+
+.chip {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgba(12, 22, 36, 0.8);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: var(--panel-border-soft);
+    border-right-color: var(--panel-border-soft);
+    border-top-color: var(--panel-border-soft);
+    border-bottom-color: var(--panel-border-soft);
+    border-top-left-radius: var(--r-pill);
+    border-top-right-radius: var(--r-pill);
+    border-bottom-left-radius: var(--r-pill);
+    border-bottom-right-radius: var(--r-pill);
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+/* ============================ Pestañas (tienda) ============================ */
+
+.tab {
+    -unity-font: url("project://database/Assets/_Project/UIToolkit/Fonts/Orbitron.ttf");
+    -unity-font-definition: initial;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    background-color: rgba(10, 18, 30, 0.5);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: var(--panel-border-soft);
+    border-right-color: var(--panel-border-soft);
+    border-top-color: var(--panel-border-soft);
+    border-bottom-color: var(--panel-border-soft);
+    border-top-left-radius: var(--r-md);
+    border-top-right-radius: var(--r-md);
+    border-bottom-left-radius: var(--r-md);
+    border-bottom-right-radius: var(--r-md);
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-right: 10px;
+}
+
+.tab--active {
+    color: var(--cyan-bright);
+    border-left-color: var(--cyan);
+    border-right-color: var(--cyan);
+    border-top-color: var(--cyan);
+    border-bottom-color: var(--cyan);
+    background-color: rgba(20, 48, 64, 0.6);
+}
+
+/* ============================ Tarjetas (mundo / item / logro) ============================ */
+
+.card {
+    background-color: var(--panel-fill);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: var(--panel-border);
+    border-right-color: var(--panel-border);
+    border-top-color: var(--panel-border);
+    border-bottom-color: var(--panel-border);
+    border-top-left-radius: var(--r-lg);
+    border-top-right-radius: var(--r-lg);
+    border-bottom-left-radius: var(--r-lg);
+    border-bottom-right-radius: var(--r-lg);
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    transition-property: scale, border-color;
+    transition-duration: 0.14s;
+}
+
+.card:hover {
+    scale: 1.02 1.02;
+    border-left-color: var(--cyan);
+    border-right-color: var(--cyan);
+    border-top-color: var(--cyan);
+    border-bottom-color: var(--cyan);
+}
+
+.card--locked {
+    opacity: 0.45;
+}
+
+.card--purple {
+    border-left-color: rgba(168, 85, 247, 0.6);
+    border-right-color: rgba(168, 85, 247, 0.6);
+    border-top-color: rgba(168, 85, 247, 0.6);
+    border-bottom-color: rgba(168, 85, 247, 0.6);
+    background-color: rgba(40, 20, 60, 0.5);
+}
+
+.card--gold {
+    border-left-color: rgba(251, 191, 36, 0.7);
+    border-right-color: rgba(251, 191, 36, 0.7);
+    border-top-color: rgba(251, 191, 36, 0.7);
+    border-bottom-color: rgba(251, 191, 36, 0.7);
+    background-color: rgba(54, 42, 14, 0.5);
+}
+
+.card-title {
+    -unity-font: url("project://database/Assets/_Project/UIToolkit/Fonts/Orbitron.ttf");
+    -unity-font-definition: initial;
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: var(--cyan-bright);
+    letter-spacing: 1px;
+    text-shadow: 0 0 12px rgba(45, 212, 238, 0.6);
+}
+
+.card-subtitle {
+    font-size: 14px;
+    color: var(--green);
+    margin-top: 2px;
+}
+
+.card-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 8px;
+    white-space: normal;
+}
+
+/* ============================ Estrellas de dificultad ============================ */
+
+.stars {
+    flex-direction: row;
+    margin-bottom: 6px;
+}
+
+.star {
+    width: 16px;
+    height: 16px;
+    margin-right: 3px;
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--amber);
+}
+
+.star--empty {
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0.18);
+}
+
+/* ============================ Texto utilitario ============================ */
+
+.coin-amount {
+    -unity-font: url("project://database/Assets/_Project/UIToolkit/Fonts/Orbitron.ttf");
+    -unity-font-definition: initial;
+    font-size: 18px;
+    color: var(--amber);
+    -unity-font-style: bold;
+}
+
+.price-old {
+    font-size: 13px;
+    color: var(--text-mut);
+    margin-right: 8px;
+}
+
+.price-new {
+    font-size: 16px;
+    color: var(--amber);
+    -unity-font-style: bold;
+}
+
+.muted {
+    color: var(--text-dim);
+}
+
+.dim {
+    color: var(--text-mut);
+}
+
+.row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.grow {
+    flex-grow: 1;
+}
+
+.center {
+    align-items: center;
+    justify-content: center;
+}

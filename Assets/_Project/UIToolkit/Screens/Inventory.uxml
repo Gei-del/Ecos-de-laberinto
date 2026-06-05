@@ -1,0 +1,74 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UIToolkit/Theme/EcosTheme.uss" />
+    <ui:VisualElement name="Inventory" class="screen">
+        <ui:VisualElement class="bg-grid" picking-mode="Ignore" />
+        <ui:VisualElement class="bg-vignette" picking-mode="Ignore" />
+
+        <ui:VisualElement class="fill" style="padding-left: 48px; padding-right: 48px; padding-top: 24px; padding-bottom: 24px;">
+            <!-- cabecera -->
+            <ui:VisualElement class="row" style="height: 44px;">
+                <ui:Button name="BtnBack" class="row grow" style="background-color: rgba(0,0,0,0); border-width: 0; justify-content: flex-start;">
+                    <ui:VisualElement style="width: 16px; height: 16px; margin-right: 8px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/chevron-left.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                    <ui:Label text="VOLVER" class="muted" style="font-size: 13px; letter-spacing: 2px;" />
+                </ui:Button>
+                <ui:VisualElement class="chip" style="margin-right: 10px;">
+                    <ui:VisualElement style="width: 16px; height: 16px; margin-right: 7px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/coin.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(251,191,36);" />
+                    <ui:Label text="3,500" class="coin-amount" style="font-size: 14px;" />
+                </ui:VisualElement>
+                <ui:VisualElement class="chip">
+                    <ui:VisualElement style="width: 16px; height: 16px; margin-right: 7px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/gem.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(125,249,255);" />
+                    <ui:Label text="24" style="font-size: 14px; color: rgb(125,249,255);" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:Label text="INVENTARIO" class="screen-title" style="margin-bottom: 18px;" />
+
+            <!-- pestañas -->
+            <ui:VisualElement class="row" style="margin-bottom: 16px;">
+                <ui:Button name="TabCharacters" text="PERSONAJES" class="tab tab--active" />
+                <ui:Button name="TabRelics" text="RELIQUIAS" class="tab" />
+                <ui:Button name="TabCosmetics" text="COSMÉTICOS" class="tab" />
+            </ui:VisualElement>
+
+            <!-- contenido: rejilla + detalle -->
+            <ui:VisualElement class="row grow" style="align-items: stretch;">
+                <ui:ScrollView style="flex-grow: 1; margin-right: 18px;">
+                    <ui:VisualElement style="flex-direction: row; flex-wrap: wrap;">
+                        <ui:Button name="Item0" class="card" style="width: 150px; height: 170px; margin: 8px; align-items: center; justify-content: center;">
+                            <ui:VisualElement style="width: 54px; height: 54px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/person.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(125,249,255);" />
+                            <ui:Label text="NOVA" class="card-title" style="font-size: 16px; margin-top: 10px;" />
+                            <ui:Label text="Equipado" class="card-subtitle" style="font-size: 12px;" />
+                        </ui:Button>
+                        <ui:Button name="Item1" class="card" style="width: 150px; height: 170px; margin: 8px; align-items: center; justify-content: center;">
+                            <ui:VisualElement style="width: 54px; height: 54px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/person.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(125,249,255);" />
+                            <ui:Label text="ATLAS" class="card-title" style="font-size: 16px; margin-top: 10px;" />
+                            <ui:Label text="Desbloqueado" class="muted" style="font-size: 12px;" />
+                        </ui:Button>
+                        <ui:Button name="Item2" class="card card--locked" style="width: 150px; height: 170px; margin: 8px; align-items: center; justify-content: center;">
+                            <ui:VisualElement style="width: 40px; height: 40px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/lock.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                            <ui:Label text="ECHO" class="card-title" style="font-size: 16px; margin-top: 10px;" />
+                            <ui:Label text="Bloqueado" class="dim" style="font-size: 12px;" />
+                        </ui:Button>
+                        <ui:Button name="Item3" class="card card--locked" style="width: 150px; height: 170px; margin: 8px; align-items: center; justify-content: center;">
+                            <ui:VisualElement style="width: 40px; height: 40px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/lock.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                            <ui:Label text="CHRONA" class="card-title" style="font-size: 16px; margin-top: 10px;" />
+                            <ui:Label text="Legendario" class="dim" style="font-size: 12px;" />
+                        </ui:Button>
+                    </ui:VisualElement>
+                </ui:ScrollView>
+
+                <!-- panel detalle -->
+                <ui:VisualElement name="DetailPanel" class="panel" style="width: 320px;">
+                    <ui:VisualElement class="center" style="height: 150px; background-color: rgba(34,211,238,0.08); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                        <ui:VisualElement style="width: 72px; height: 72px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/person.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(125,249,255);" />
+                    </ui:VisualElement>
+                    <ui:Label name="DetailName" text="NOVA" class="card-title" style="font-size: 24px; margin-top: 14px;" />
+                    <ui:Label name="DetailType" text="Personaje inicial" class="card-subtitle" />
+                    <ui:Label name="DetailDesc" text="Los ecos temporales duran más tiempo. Ideal para puzzles de sincronización larga." class="card-desc" style="margin-top: 10px;" />
+                    <ui:VisualElement class="grow" />
+                    <ui:Button name="BtnEquip" text="EQUIPADO" class="btn btn--disabled" style="margin-top: 12px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,61 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UIToolkit/Theme/EcosTheme.uss" />
+    <ui:VisualElement name="MainMenu" class="screen">
+        <ui:VisualElement class="bg-grid" picking-mode="Ignore" />
+        <ui:VisualElement class="bg-vignette" picking-mode="Ignore" />
+
+        <ui:VisualElement class="fill center" style="justify-content: flex-start; padding-top: 40px;">
+            <!-- Logo orbital con glow -->
+            <ui:VisualElement class="center" style="width: 200px; height: 170px;">
+                <ui:VisualElement picking-mode="Ignore" style="position: absolute; width: 180px; height: 180px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/glow_cyan.png'); -unity-background-scale-mode: scale-to-fit; opacity: 0.7;" />
+                <ui:VisualElement name="Logo" style="width: 120px; height: 120px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/orbit.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(125, 249, 255);" />
+            </ui:VisualElement>
+
+            <ui:Label text="ECOS DEL LABERINTO" class="title-xl" />
+            <ui:Label text="CRONOFRAGMENTOS" class="title-sub" style="margin-top: 6px;" />
+
+            <!-- Panel de menú -->
+            <ui:VisualElement name="MenuPanel" class="panel panel--soft" style="width: 420px; margin-top: 36px;">
+                <ui:Button name="BtnNewGame" class="menu-btn menu-btn--selected">
+                    <ui:VisualElement class="menu-btn__icon" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/play.png');" />
+                    <ui:Label text="NUEVA PARTIDA" class="menu-btn__label" />
+                </ui:Button>
+                <ui:Button name="BtnContinue" class="menu-btn">
+                    <ui:VisualElement class="menu-btn__icon" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/continue.png');" />
+                    <ui:Label text="CONTINUAR" class="menu-btn__label" />
+                    <ui:VisualElement class="menu-btn__suffix" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/cloud.png');" />
+                </ui:Button>
+                <ui:Button name="BtnCharacters" class="menu-btn">
+                    <ui:VisualElement class="menu-btn__icon" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/people.png');" />
+                    <ui:Label text="PERSONAJES" class="menu-btn__label" />
+                </ui:Button>
+                <ui:Button name="BtnWorlds" class="menu-btn">
+                    <ui:VisualElement class="menu-btn__icon" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/globe.png');" />
+                    <ui:Label text="MUNDOS" class="menu-btn__label" />
+                </ui:Button>
+                <ui:Button name="BtnInventory" class="menu-btn">
+                    <ui:VisualElement class="menu-btn__icon" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/bag.png');" />
+                    <ui:Label text="INVENTARIO" class="menu-btn__label" />
+                </ui:Button>
+                <ui:Button name="BtnShop" class="menu-btn">
+                    <ui:VisualElement class="menu-btn__icon" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/cart.png');" />
+                    <ui:Label text="TIENDA" class="menu-btn__label" />
+                </ui:Button>
+                <ui:Button name="BtnAchievements" class="menu-btn">
+                    <ui:VisualElement class="menu-btn__icon" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/trophy.png');" />
+                    <ui:Label text="LOGROS" class="menu-btn__label" />
+                </ui:Button>
+                <ui:Button name="BtnSettings" class="menu-btn">
+                    <ui:VisualElement class="menu-btn__icon" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/cog.png');" />
+                    <ui:Label text="CONFIGURACIÓN" class="menu-btn__label" />
+                </ui:Button>
+                <ui:Button name="BtnQuit" class="menu-btn">
+                    <ui:VisualElement class="menu-btn__icon" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/close.png');" />
+                    <ui:Label text="SALIR" class="menu-btn__label" />
+                </ui:Button>
+            </ui:VisualElement>
+
+            <ui:Label text="v0.2 · NÚCLEO TEMPORAL" class="dim" style="margin-top: 18px; font-size: 11px; letter-spacing: 3px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

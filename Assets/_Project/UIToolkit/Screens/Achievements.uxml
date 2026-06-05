@@ -1,0 +1,87 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UIToolkit/Theme/EcosTheme.uss" />
+    <ui:VisualElement name="Achievements" class="screen">
+        <ui:VisualElement class="bg-grid" picking-mode="Ignore" />
+        <ui:VisualElement class="bg-vignette" picking-mode="Ignore" />
+
+        <ui:VisualElement class="fill" style="padding-left: 48px; padding-right: 48px; padding-top: 24px; padding-bottom: 24px;">
+            <ui:VisualElement class="row" style="height: 44px;">
+                <ui:Button name="BtnBack" class="row" style="background-color: rgba(0,0,0,0); border-width: 0;">
+                    <ui:VisualElement style="width: 16px; height: 16px; margin-right: 8px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/chevron-left.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                    <ui:Label text="VOLVER" class="muted" style="font-size: 13px; letter-spacing: 2px;" />
+                </ui:Button>
+            </ui:VisualElement>
+
+            <ui:Label text="LOGROS" class="screen-title" style="margin-bottom: 8px;" />
+
+            <!-- progreso global -->
+            <ui:VisualElement class="panel panel--soft" style="margin-bottom: 18px;">
+                <ui:VisualElement class="row" style="margin-bottom: 8px;">
+                    <ui:Label text="PROGRESO TOTAL" class="grow" style="font-size: 13px; color: rgb(125,249,255); letter-spacing: 2px;" />
+                    <ui:Label name="ProgressLabel" text="8 / 25 DESBLOQUEADOS" class="muted" style="font-size: 13px;" />
+                </ui:VisualElement>
+                <ui:VisualElement class="bar-track" style="height: 10px;"><ui:VisualElement name="ProgressFill" class="bar-fill" style="width: 32%; height: 10px;" /></ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:ScrollView style="flex-grow: 1;">
+                <ui:VisualElement style="flex-direction: row; flex-wrap: wrap;">
+
+                    <ui:VisualElement class="card row" style="width: 380px; height: 96px; margin: 8px; align-items: center;">
+                        <ui:VisualElement style="width: 44px; height: 44px; margin-right: 14px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/people.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(125,249,255);" />
+                        <ui:VisualElement class="grow">
+                            <ui:Label text="PRIMER ECO" class="card-title" style="font-size: 16px;" />
+                            <ui:Label text="Crea tu primer eco temporal." class="card-desc" style="margin-top: 2px;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="width: 22px; height: 22px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/trophy.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(52,211,153);" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="card row" style="width: 380px; height: 96px; margin: 8px; align-items: center;">
+                        <ui:VisualElement style="width: 44px; height: 44px; margin-right: 14px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/gem.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(125,249,255);" />
+                        <ui:VisualElement class="grow">
+                            <ui:Label text="COLECCIONISTA" class="card-title" style="font-size: 16px;" />
+                            <ui:Label text="Recoge 50 cristales temporales." class="card-desc" style="margin-top: 2px;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="width: 22px; height: 22px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/trophy.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(52,211,153);" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="card row card--locked" style="width: 380px; height: 96px; margin: 8px; align-items: center;">
+                        <ui:VisualElement style="width: 44px; height: 44px; margin-right: 14px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/shield.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                        <ui:VisualElement class="grow">
+                            <ui:Label text="SIN MORIR" class="card-title" style="font-size: 16px;" />
+                            <ui:Label text="Completa un mundo sin morir." class="card-desc" style="margin-top: 2px;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="width: 22px; height: 22px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/lock.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="card row card--locked" style="width: 380px; height: 96px; margin: 8px; align-items: center;">
+                        <ui:VisualElement style="width: 44px; height: 44px; margin-right: 14px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/clock.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                        <ui:VisualElement class="grow">
+                            <ui:Label text="MAESTRO TEMPORAL" class="card-title" style="font-size: 16px;" />
+                            <ui:Label text="Consigue 3 estrellas en 10 niveles." class="card-desc" style="margin-top: 2px;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="width: 22px; height: 22px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/lock.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="card row" style="width: 380px; height: 96px; margin: 8px; align-items: center;">
+                        <ui:VisualElement style="width: 44px; height: 44px; margin-right: 14px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/bolt.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(125,249,255);" />
+                        <ui:VisualElement class="grow">
+                            <ui:Label text="VELOCISTA" class="card-title" style="font-size: 16px;" />
+                            <ui:Label text="Completa un nivel en menos de 30s." class="card-desc" style="margin-top: 2px;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="width: 22px; height: 22px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/trophy.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(52,211,153);" />
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="card row card--locked" style="width: 380px; height: 96px; margin: 8px; align-items: center;">
+                        <ui:VisualElement style="width: 44px; height: 44px; margin-right: 14px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/crown.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                        <ui:VisualElement class="grow">
+                            <ui:Label text="DOMINADOR DEL TIEMPO" class="card-title" style="font-size: 16px;" />
+                            <ui:Label text="Completa todos los mundos al 100%." class="card-desc" style="margin-top: 2px;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="width: 22px; height: 22px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/lock.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+            </ui:ScrollView>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
