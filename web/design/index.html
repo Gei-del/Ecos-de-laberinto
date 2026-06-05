@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ECOS DEL LABERINTO: CRONOFRAGMENTOS · UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-vignette"></div>
+
+<nav class="topnav">
+  <span class="brand">ECOS · CRONOFRAGMENTOS</span>
+  <button data-go="menu" class="active">MENÚ</button>
+  <button data-go="char">PERSONAJE</button>
+  <button data-go="world">MUNDO</button>
+  <button data-go="hud">HUD</button>
+  <button data-go="inv">INVENTARIO</button>
+  <button data-go="shop">TIENDA</button>
+  <button data-go="ach">LOGROS</button>
+</nav>
+
+<div class="stage">
+
+  <!-- 1 · MENÚ PRINCIPAL -->
+  <section class="screen active" id="menu">
+    <div class="menu-wrap">
+      <div class="logo"><span class="glow"></span><i class="ic t-bright" data-ic="orbit"></i></div>
+      <h1 class="title-xl">ECOS DEL LABERINTO</h1>
+      <div class="title-sub">CRONOFRAGMENTOS</div>
+      <div class="menu-panel panel panel--soft">
+        <button class="menu-btn selected" data-go="hud"><i class="ic" data-ic="play"></i><span class="label">NUEVA PARTIDA</span></button>
+        <button class="menu-btn" data-go="hud"><i class="ic" data-ic="continue"></i><span class="label">CONTINUAR</span><i class="ic suffix" data-ic="cloud"></i></button>
+        <button class="menu-btn" data-go="char"><i class="ic" data-ic="people"></i><span class="label">PERSONAJES</span></button>
+        <button class="menu-btn" data-go="world"><i class="ic" data-ic="globe"></i><span class="label">MUNDOS</span></button>
+        <button class="menu-btn" data-go="inv"><i class="ic" data-ic="bag"></i><span class="label">INVENTARIO</span></button>
+        <button class="menu-btn" data-go="shop"><i class="ic" data-ic="cart"></i><span class="label">TIENDA</span></button>
+        <button class="menu-btn" data-go="ach"><i class="ic" data-ic="trophy"></i><span class="label">LOGROS</span></button>
+        <button class="menu-btn"><i class="ic" data-ic="cog"></i><span class="label">CONFIGURACIÓN</span></button>
+        <button class="menu-btn"><i class="ic" data-ic="close"></i><span class="label">SALIR</span></button>
+      </div>
+      <div class="dim" style="margin-top:18px;font-size:11px;letter-spacing:3px">v0.2 · NÚCLEO TEMPORAL</div>
+    </div>
+  </section>
+
+  <!-- 2 · SELECCIÓN DE PERSONAJE -->
+  <section class="screen" id="char">
+    <div class="row"><button class="back" data-go="menu"><i class="ic" data-ic="chevron-left"></i>VOLVER</button></div>
+    <h2 class="screen-title" style="margin-bottom:24px">SELECCIÓN DE PERSONAJE</h2>
+    <div class="row" style="justify-content:center;gap:18px;flex:1;align-items:center">
+      <div class="arrow"><i class="ic" data-ic="chevron-left"></i></div>
+      <div class="panel" style="width:320px;height:380px;display:flex;align-items:center;justify-content:center;background:rgba(14,30,48,.6)">
+        <div style="width:150px;height:230px;border-radius:10px;background:rgba(34,211,238,.10);border:1px solid rgba(45,212,238,.3)"></div>
+      </div>
+      <div class="arrow" style="margin-right:24px"><i class="ic" data-ic="chevron-right"></i></div>
+      <div class="panel" style="width:460px">
+        <div class="card-title" style="font-size:30px">ARIA-7</div>
+        <div class="card-sub" style="font-size:15px">Crononauta</div>
+        <div class="card-desc" style="margin:12px 0 8px">Maestra del flujo temporal. Puede ralentizar el tiempo en áreas específicas.</div>
+        <div class="stat-row"><i class="ic" data-ic="bolt"></i><span class="stat-label">VELOCIDAD</span><span class="bar-track"><span class="bar-fill green" style="width:85%"></span></span><span class="stat-value">85</span></div>
+        <div class="stat-row"><i class="ic" data-ic="shield"></i><span class="stat-label">DEFENSA</span><span class="bar-track"><span class="bar-fill green" style="width:60%"></span></span><span class="stat-value">60</span></div>
+        <div class="stat-row"><i class="ic" data-ic="clock"></i><span class="stat-label">ENERGÍA</span><span class="bar-track"><span class="bar-fill green" style="width:90%"></span></span><span class="stat-value">90</span></div>
+        <div class="stat-row"><i class="ic" data-ic="star"></i><span class="stat-label">HABILIDAD</span><span class="bar-track"><span class="bar-fill green" style="width:95%"></span></span><span class="stat-value">95</span></div>
+      </div>
+    </div>
+    <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+    <div style="text-align:center"><button class="btn" data-go="world">SELECCIONAR</button></div>
+  </section>
+
+  <!-- 3 · SELECCIÓN DE MUNDO -->
+  <section class="screen" id="world">
+    <div class="row"><button class="back" data-go="menu"><i class="ic" data-ic="chevron-left"></i>VOLVER</button></div>
+    <h2 class="screen-title" style="margin-bottom:24px">SELECCIÓN DE MUNDO</h2>
+    <div class="scroll">
+      <div class="grid" style="gap:24px">
+        <div class="card" style="width:360px;height:210px" data-go="hud">
+          <div class="stars"><i class="star ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i></div>
+          <div class="card-title">NEXO PRIMORDIAL</div><div class="card-sub">El Origen</div>
+          <div class="card-desc">Donde todo comenzó. Las primeras fisuras temporales.</div>
+          <div class="grow"></div>
+          <div class="row"><span class="muted grow" style="font-size:12px">Progreso</span><span class="muted" style="font-size:12px">12/12</span></div>
+          <div class="bar-track" style="margin-top:4px"><span class="bar-fill" style="width:100%"></span></div>
+        </div>
+        <div class="card purple" style="width:360px;height:210px" data-go="hud">
+          <div class="stars"><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i></div>
+          <div class="card-title" style="color:#c4b5fd">FRACTURAS DEL VACÍO</div><div class="card-sub">Dimensión Paralela</div>
+          <div class="card-desc">Realidades fragmentadas que colapsan entre sí.</div>
+          <div class="grow"></div>
+          <div class="row"><span class="muted grow" style="font-size:12px">Progreso</span><span class="muted" style="font-size:12px">8/15</span></div>
+          <div class="bar-track" style="margin-top:4px"><span class="bar-fill purple" style="width:53%"></span></div>
+        </div>
+        <div class="card" style="width:360px;height:210px" data-go="hud">
+          <div class="stars"><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i></div>
+          <div class="card-title">ESPIRAL INFINITO</div><div class="card-sub">Bucle Temporal</div>
+          <div class="card-desc">Un laberinto que se repite eternamente.</div>
+          <div class="grow"></div>
+          <div class="row"><span class="muted grow" style="font-size:12px">Progreso</span><span class="muted" style="font-size:12px">0/18</span></div>
+          <div class="bar-track" style="margin-top:4px"><span class="bar-fill" style="width:2%"></span></div>
+        </div>
+        <div class="card locked" style="width:360px;height:210px">
+          <div class="stars"><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i></div>
+          <div class="card-title">HORIZONTE COLAPSADO</div><div class="card-sub">El Fin de Todo</div>
+          <div class="card-desc">Donde las líneas temporales convergen y mueren.</div>
+          <div class="grow"></div>
+          <div class="row" style="gap:8px;justify-content:center"><i class="ic t-dim" data-ic="lock" style="width:18px;height:18px"></i><span class="muted" style="font-size:12px">Completa el mundo anterior</span></div>
+        </div>
+        <div class="card locked" style="width:360px;height:210px">
+          <div class="stars"><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i></div>
+          <div class="card-title">SINGULARIDAD</div><div class="card-sub">Más Allá del Tiempo</div>
+          <div class="card-desc">El centro del laberinto. Tu destino final.</div>
+          <div class="grow"></div>
+          <div class="row" style="gap:8px;justify-content:center"><i class="ic t-dim" data-ic="lock" style="width:18px;height:18px"></i><span class="muted" style="font-size:12px">Completa el mundo anterior</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · HUD -->
+  <section class="screen" id="hud" style="padding:0">
+    <div class="hud-top">
+      <div class="row grow" style="gap:10px">
+        <span class="chip"><i class="ic" data-ic="clock"></i>00:42</span>
+        <span class="chip"><i class="ic t-red" data-ic="heart"></i>2</span>
+        <span class="chip"><i class="ic" data-ic="people"></i>3 / 10</span>
+        <span class="chip"><i class="ic t-bright" data-ic="gem"></i>1 / 3</span>
+      </div>
+      <div class="row" style="gap:10px">
+        <span class="chip"><i class="ic t-amber" data-ic="coin"></i><span style="color:var(--amber)">3,500</span></span>
+        <span class="chip"><i class="ic t-amber" data-ic="star"></i>1280</span>
+        <button class="arrow" style="width:38px;height:38px" data-go="menu"><i class="ic" data-ic="cog"></i></button>
+      </div>
+    </div>
+    <div class="panel hud-ability">
+      <div class="row" style="gap:12px">
+        <i class="ic t-bright" data-ic="hourglass" style="width:40px;height:40px"></i>
+        <div class="grow">
+          <div class="row"><span class="grow" style="font-size:12px;color:var(--cyan-bright);letter-spacing:1px">ECO PROLONGADO</span><span class="dim" style="font-size:12px">Q</span></div>
+          <div class="bar-track" style="margin-top:8px"><span class="bar-fill" style="width:70%"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="hud-hint">WASD MOVER · E INTERACTUAR · R REINICIAR</div>
+  </section>
+
+  <!-- 5 · INVENTARIO -->
+  <section class="screen" id="inv">
+    <div class="row">
+      <button class="back grow" style="justify-content:flex-start" data-go="menu"><i class="ic" data-ic="chevron-left"></i>VOLVER</button>
+      <span class="chip" style="margin-right:10px"><i class="ic t-amber" data-ic="coin"></i><span class="coin" style="font-size:14px">3,500</span></span>
+      <span class="chip"><i class="ic t-bright" data-ic="gem"></i><span style="color:var(--cyan-bright)">24</span></span>
+    </div>
+    <h2 class="screen-title" style="margin-bottom:18px">INVENTARIO</h2>
+    <div class="tabs"><button class="tab active">PERSONAJES</button><button class="tab">RELIQUIAS</button><button class="tab">COSMÉTICOS</button></div>
+    <div class="row" style="flex:1;align-items:stretch;gap:18px">
+      <div class="scroll grow">
+        <div class="grid" style="justify-content:flex-start;gap:16px">
+          <div class="card" style="width:150px;height:170px;align-items:center;justify-content:center"><i class="ic t-bright" data-ic="person" style="width:54px;height:54px"></i><div class="card-title" style="font-size:16px;margin-top:10px">NOVA</div><div class="card-sub" style="font-size:12px">Equipado</div></div>
+          <div class="card" style="width:150px;height:170px;align-items:center;justify-content:center"><i class="ic t-bright" data-ic="person" style="width:54px;height:54px"></i><div class="card-title" style="font-size:16px;margin-top:10px">ATLAS</div><div class="muted" style="font-size:12px">Desbloqueado</div></div>
+          <div class="card locked" style="width:150px;height:170px;align-items:center;justify-content:center"><i class="ic t-dim" data-ic="lock" style="width:40px;height:40px"></i><div class="card-title" style="font-size:16px;margin-top:10px">ECHO</div><div class="dim" style="font-size:12px">Bloqueado</div></div>
+          <div class="card locked" style="width:150px;height:170px;align-items:center;justify-content:center"><i class="ic t-dim" data-ic="lock" style="width:40px;height:40px"></i><div class="card-title" style="font-size:16px;margin-top:10px">CHRONA</div><div class="dim" style="font-size:12px">Legendario</div></div>
+        </div>
+      </div>
+      <div class="panel" style="width:320px;display:flex;flex-direction:column">
+        <div class="thumb" style="height:150px"><i class="ic t-bright" data-ic="person" style="width:72px;height:72px"></i></div>
+        <div class="card-title" style="font-size:24px;margin-top:14px">NOVA</div>
+        <div class="card-sub">Personaje inicial</div>
+        <div class="card-desc" style="margin-top:10px">Los ecos temporales duran más tiempo. Ideal para puzzles de sincronización larga.</div>
+        <div class="grow"></div>
+        <button class="btn disabled" style="margin-top:12px">EQUIPADO</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · TIENDA -->
+  <section class="screen" id="shop">
+    <div class="row">
+      <button class="back grow" style="justify-content:flex-start" data-go="menu"><i class="ic" data-ic="chevron-left"></i>VOLVER</button>
+      <span class="chip"><i class="ic t-amber" data-ic="coin" style="width:18px;height:18px"></i><span class="coin">3,500</span></span>
+    </div>
+    <h2 class="screen-title" style="margin-bottom:18px">TIENDA</h2>
+    <div class="tabs"><button class="tab active">DESTACADOS</button><button class="tab">FRAGMENTOS</button><button class="tab">ASPECTOS</button><button class="tab">MEJORAS</button></div>
+    <div class="scroll">
+      <div class="grid" style="gap:20px">
+        <div class="card" style="width:250px;height:290px">
+          <span class="badge">-33%</span>
+          <div class="thumb"><i class="ic t-bright" data-ic="gem"></i></div>
+          <div class="card-title" style="font-size:17px;margin-top:10px">PACK CRISTAL</div>
+          <div class="card-desc">+500 Fragmentos Temporales</div><div class="grow"></div>
+          <div class="row" style="align-items:flex-end;margin-bottom:8px"><span class="price-old">600</span><span class="price-new">400</span></div>
+          <button class="btn" style="font-size:13px;padding:8px 0">COMPRAR</button>
+        </div>
+        <div class="card" style="width:250px;height:290px">
+          <div class="thumb"><i class="ic t-bright" data-ic="person"></i></div>
+          <div class="card-title" style="font-size:17px;margin-top:10px">ASPECTO: NOVA NEÓN</div>
+          <div class="card-desc">Skin holográfica para Nova</div><div class="grow"></div>
+          <div class="row" style="align-items:flex-end;margin-bottom:8px"><span class="price-new">1,200</span></div>
+          <button class="btn" style="font-size:13px;padding:8px 0">COMPRAR</button>
+        </div>
+        <div class="card purple" style="width:250px;height:290px">
+          <span class="badge">-50%</span>
+          <div class="thumb" style="background:rgba(168,85,247,.12)"><i class="ic t-purple" data-ic="person"></i></div>
+          <div class="card-title" style="font-size:17px;margin-top:10px;color:#c4b5fd">ASPECTO: ATLAS VOID</div>
+          <div class="card-desc">Skin legendaria del vacío</div><div class="grow"></div>
+          <div class="row" style="align-items:flex-end;margin-bottom:8px"><span class="price-old">2,000</span><span class="price-new">1,000</span></div>
+          <button class="btn" style="font-size:13px;padding:8px 0">COMPRAR</button>
+        </div>
+        <div class="card" style="width:250px;height:290px">
+          <div class="thumb"><i class="ic t-green" data-ic="orbit"></i></div>
+          <div class="card-title" style="font-size:17px;margin-top:10px">NÚCLEO TEMPORAL</div>
+          <div class="card-desc">Reliquia: +1 eco simultáneo</div><div class="grow"></div>
+          <div class="row" style="align-items:flex-end;margin-bottom:8px"><span class="price-new">3,000</span></div>
+          <button class="btn" style="font-size:13px;padding:8px 0">COMPRAR</button>
+        </div>
+      </div>
+      <div class="card gold row" style="margin-top:20px;align-items:center;gap:18px;padding:18px">
+        <i class="ic t-amber" data-ic="gift" style="width:48px;height:48px"></i>
+        <div class="grow">
+          <div class="card-title" style="font-size:18px;color:var(--amber)">OFERTA ESPECIAL · PACK CRONOS</div>
+          <div class="card-desc" style="margin-top:2px">Todos los aspectos al -40% · Termina en 23:59:59</div>
+        </div>
+        <button class="btn gold">COMPRAR</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · LOGROS -->
+  <section class="screen" id="ach">
+    <div class="row"><button class="back" data-go="menu"><i class="ic" data-ic="chevron-left"></i>VOLVER</button></div>
+    <h2 class="screen-title" style="margin-bottom:8px">LOGROS</h2>
+    <div class="panel panel--soft" style="margin-bottom:18px">
+      <div class="row" style="margin-bottom:8px"><span class="grow" style="font-size:13px;color:var(--cyan-bright);letter-spacing:2px">PROGRESO TOTAL</span><span class="muted" style="font-size:13px">8 / 25 DESBLOQUEADOS</span></div>
+      <div class="bar-track" style="height:10px"><span class="bar-fill" style="width:32%"></span></div>
+    </div>
+    <div class="scroll">
+      <div class="grid" style="justify-content:flex-start;gap:16px">
+        <div class="card row" style="width:380px;height:96px;align-items:center;gap:14px"><i class="ic t-bright" data-ic="people" style="width:44px;height:44px"></i><div class="grow"><div class="card-title" style="font-size:16px">PRIMER ECO</div><div class="card-desc" style="margin-top:2px">Crea tu primer eco temporal.</div></div><i class="ic t-green" data-ic="trophy" style="width:22px;height:22px"></i></div>
+        <div class="card row" style="width:380px;height:96px;align-items:center;gap:14px"><i class="ic t-bright" data-ic="gem" style="width:44px;height:44px"></i><div class="grow"><div class="card-title" style="font-size:16px">COLECCIONISTA</div><div class="card-desc" style="margin-top:2px">Recoge 50 cristales temporales.</div></div><i class="ic t-green" data-ic="trophy" style="width:22px;height:22px"></i></div>
+        <div class="card row locked" style="width:380px;height:96px;align-items:center;gap:14px"><i class="ic t-dim" data-ic="shield" style="width:44px;height:44px"></i><div class="grow"><div class="card-title" style="font-size:16px">SIN MORIR</div><div class="card-desc" style="margin-top:2px">Completa un mundo sin morir.</div></div><i class="ic t-dim" data-ic="lock" style="width:22px;height:22px"></i></div>
+        <div class="card row locked" style="width:380px;height:96px;align-items:center;gap:14px"><i class="ic t-dim" data-ic="clock" style="width:44px;height:44px"></i><div class="grow"><div class="card-title" style="font-size:16px">MAESTRO TEMPORAL</div><div class="card-desc" style="margin-top:2px">Consigue 3 estrellas en 10 niveles.</div></div><i class="ic t-dim" data-ic="lock" style="width:22px;height:22px"></i></div>
+        <div class="card row" style="width:380px;height:96px;align-items:center;gap:14px"><i class="ic t-bright" data-ic="bolt" style="width:44px;height:44px"></i><div class="grow"><div class="card-title" style="font-size:16px">VELOCISTA</div><div class="card-desc" style="margin-top:2px">Completa un nivel en menos de 30s.</div></div><i class="ic t-green" data-ic="trophy" style="width:22px;height:22px"></i></div>
+        <div class="card row locked" style="width:380px;height:96px;align-items:center;gap:14px"><i class="ic t-dim" data-ic="crown" style="width:44px;height:44px"></i><div class="grow"><div class="card-title" style="font-size:16px">DOMINADOR DEL TIEMPO</div><div class="card-desc" style="margin-top:2px">Completa todos los mundos al 100%.</div></div><i class="ic t-dim" data-ic="lock" style="width:22px;height:22px"></i></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // iconos: máscara desde PNG blanco
+  document.querySelectorAll('.ic[data-ic]').forEach(el=>{
+    const u=`assets/icons/${el.dataset.ic}.png`;
+    el.style.webkitMaskImage=`url(${u})`; el.style.maskImage=`url(${u})`;
+  });
+  // navegación entre pantallas
+  function go(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
+    document.querySelectorAll('.topnav button').forEach(b=>b.classList.toggle('active',b.dataset.go===id));
+    const st=document.querySelector('.stage'); if(st) st.scrollTop=0;
+  }
+  document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go)));
+  // teclas 1-7
+  const order=['menu','char','world','hud','inv','shop','ach'];
+  addEventListener('keydown',e=>{const n=parseInt(e.key);if(n>=1&&n<=7)go(order[n-1]);});
+</script>
+</body>
+</html>
