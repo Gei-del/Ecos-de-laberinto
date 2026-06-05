@@ -1,0 +1,124 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UIToolkit/Theme/EcosTheme.uss" />
+    <ui:VisualElement name="WorldSelect" class="screen">
+        <ui:VisualElement class="bg-grid" picking-mode="Ignore" />
+        <ui:VisualElement class="bg-vignette" picking-mode="Ignore" />
+
+        <ui:VisualElement class="fill" style="padding-left: 48px; padding-right: 48px; padding-top: 24px; padding-bottom: 24px;">
+            <ui:VisualElement class="row" style="height: 40px;">
+                <ui:Button name="BtnBack" class="row" style="background-color: rgba(0,0,0,0); border-width: 0;">
+                    <ui:VisualElement style="width: 16px; height: 16px; margin-right: 8px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/chevron-left.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                    <ui:Label text="VOLVER" class="muted" style="font-size: 13px; letter-spacing: 2px;" />
+                </ui:Button>
+            </ui:VisualElement>
+
+            <ui:Label text="SELECCIÓN DE MUNDO" class="screen-title" style="margin-bottom: 24px;" />
+
+            <ui:ScrollView style="flex-grow: 1;">
+                <ui:VisualElement style="flex-direction: row; flex-wrap: wrap; justify-content: center;">
+
+                    <!-- Mundo 1 -->
+                    <ui:Button name="World1" class="card" style="width: 360px; height: 210px; margin: 12px;">
+                        <ui:VisualElement class="stars">
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star star--empty" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star star--empty" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star star--empty" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star star--empty" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                        </ui:VisualElement>
+                        <ui:Label text="NEXO PRIMORDIAL" class="card-title" />
+                        <ui:Label text="El Origen" class="card-subtitle" />
+                        <ui:Label text="Donde todo comenzó. Las primeras fisuras temporales." class="card-desc" />
+                        <ui:VisualElement class="grow" />
+                        <ui:VisualElement class="row" style="margin-bottom: 4px;">
+                            <ui:Label text="Progreso" class="muted grow" style="font-size: 12px;" />
+                            <ui:Label text="12/12" class="muted" style="font-size: 12px;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="bar-track"><ui:VisualElement class="bar-fill" style="width: 100%;" /></ui:VisualElement>
+                    </ui:Button>
+
+                    <!-- Mundo 2 (púrpura) -->
+                    <ui:Button name="World2" class="card card--purple" style="width: 360px; height: 210px; margin: 12px;">
+                        <ui:VisualElement class="stars">
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star star--empty" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star star--empty" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star star--empty" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                        </ui:VisualElement>
+                        <ui:Label text="FRACTURAS DEL VACÍO" class="card-title" style="color: rgb(196, 181, 253);" />
+                        <ui:Label text="Dimensión Paralela" class="card-subtitle" />
+                        <ui:Label text="Realidades fragmentadas que colapsan entre sí." class="card-desc" />
+                        <ui:VisualElement class="grow" />
+                        <ui:VisualElement class="row" style="margin-bottom: 4px;">
+                            <ui:Label text="Progreso" class="muted grow" style="font-size: 12px;" />
+                            <ui:Label text="8/15" class="muted" style="font-size: 12px;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="bar-track"><ui:VisualElement class="bar-fill" style="width: 53%; background-color: rgb(168,85,247);" /></ui:VisualElement>
+                    </ui:Button>
+
+                    <!-- Mundo 3 -->
+                    <ui:Button name="World3" class="card" style="width: 360px; height: 210px; margin: 12px;">
+                        <ui:VisualElement class="stars">
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star star--empty" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star star--empty" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                        </ui:VisualElement>
+                        <ui:Label text="ESPIRAL INFINITO" class="card-title" />
+                        <ui:Label text="Bucle Temporal" class="card-subtitle" />
+                        <ui:Label text="Un laberinto que se repite eternamente." class="card-desc" />
+                        <ui:VisualElement class="grow" />
+                        <ui:VisualElement class="row" style="margin-bottom: 4px;">
+                            <ui:Label text="Progreso" class="muted grow" style="font-size: 12px;" />
+                            <ui:Label text="0/18" class="muted" style="font-size: 12px;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="bar-track"><ui:VisualElement class="bar-fill" style="width: 2%;" /></ui:VisualElement>
+                    </ui:Button>
+
+                    <!-- Mundo 4 (bloqueado) -->
+                    <ui:VisualElement name="World4" class="card card--locked" style="width: 360px; height: 210px; margin: 12px;">
+                        <ui:VisualElement class="stars">
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star star--empty" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                        </ui:VisualElement>
+                        <ui:Label text="HORIZONTE COLAPSADO" class="card-title" />
+                        <ui:Label text="El Fin de Todo" class="card-subtitle" />
+                        <ui:Label text="Donde las líneas temporales convergen y mueren." class="card-desc" />
+                    </ui:VisualElement>
+
+                    <!-- Mundo 5 (bloqueado) -->
+                    <ui:VisualElement name="World5" class="card card--locked" style="width: 360px; height: 210px; margin: 12px;">
+                        <ui:VisualElement class="stars">
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:VisualElement class="star" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                        </ui:VisualElement>
+                        <ui:Label text="SINGULARIDAD" class="card-title" />
+                        <ui:Label text="Más Allá del Tiempo" class="card-subtitle" />
+                        <ui:Label text="El centro del laberinto. Tu destino final." class="card-desc" />
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+
+                <!-- superposiciones de candado para mundos bloqueados -->
+                <ui:VisualElement class="center" style="flex-direction: row; justify-content: center; margin-top: -120px;" picking-mode="Ignore">
+                    <ui:VisualElement style="width: 360px; margin: 12px; align-items: center;" picking-mode="Ignore">
+                        <ui:VisualElement style="width: 40px; height: 40px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/lock.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                        <ui:Label text="Completa el mundo anterior" class="muted" style="font-size: 12px; margin-top: 6px;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement style="width: 360px; margin: 12px; align-items: center;" picking-mode="Ignore">
+                        <ui:VisualElement style="width: 40px; height: 40px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/lock.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                        <ui:Label text="Completa el mundo anterior" class="muted" style="font-size: 12px; margin-top: 6px;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:ScrollView>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

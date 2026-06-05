@@ -1,0 +1,78 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UIToolkit/Theme/EcosTheme.uss" />
+    <ui:VisualElement name="CharacterSelect" class="screen">
+        <ui:VisualElement class="bg-grid" picking-mode="Ignore" />
+        <ui:VisualElement class="bg-vignette" picking-mode="Ignore" />
+
+        <ui:VisualElement class="fill" style="padding-left: 40px; padding-right: 40px; padding-top: 24px; padding-bottom: 24px;">
+            <!-- barra superior -->
+            <ui:VisualElement class="row" style="height: 40px;">
+                <ui:Button name="BtnBack" class="row" style="background-color: rgba(0,0,0,0); border-width: 0;">
+                    <ui:VisualElement style="width: 16px; height: 16px; margin-right: 8px; background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/chevron-left.png'); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(138,161,178);" />
+                    <ui:Label text="VOLVER" class="muted" style="font-size: 13px; letter-spacing: 2px;" />
+                </ui:Button>
+            </ui:VisualElement>
+
+            <ui:Label text="SELECCIÓN DE PERSONAJE" class="screen-title" style="margin-bottom: 24px;" />
+
+            <!-- fila central -->
+            <ui:VisualElement class="row center grow" style="justify-content: center;">
+                <ui:Button name="BtnPrev" class="carousel-arrow" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/chevron-left.png'); margin-right: 18px;" />
+
+                <!-- retrato -->
+                <ui:VisualElement name="Portrait" class="panel" style="width: 320px; height: 380px; align-items: center; justify-content: center; background-color: rgba(14, 30, 48, 0.6);">
+                    <ui:VisualElement style="width: 150px; height: 230px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; background-color: rgba(34, 211, 238, 0.10); border-width: 1px; border-left-color: rgba(45,212,238,0.3); border-right-color: rgba(45,212,238,0.3); border-top-color: rgba(45,212,238,0.3); border-bottom-color: rgba(45,212,238,0.3);" />
+                </ui:VisualElement>
+
+                <ui:Button name="BtnNext" class="carousel-arrow" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/chevron-right.png'); margin-left: 18px; margin-right: 40px;" />
+
+                <!-- panel de info -->
+                <ui:VisualElement name="InfoPanel" class="panel" style="width: 460px;">
+                    <ui:Label name="CharName" text="ARIA-7" class="card-title" style="font-size: 30px;" />
+                    <ui:Label name="CharRole" text="Crononauta" class="card-subtitle" style="font-size: 15px;" />
+                    <ui:Label name="CharDesc" text="Maestra del flujo temporal. Puede ralentizar el tiempo en áreas específicas." class="card-desc" style="margin-top: 12px; margin-bottom: 8px;" />
+
+                    <ui:VisualElement name="Stats">
+                        <ui:VisualElement class="stat-row">
+                            <ui:VisualElement class="stat-icon" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/bolt.png');" />
+                            <ui:Label text="VELOCIDAD" class="stat-label" />
+                            <ui:VisualElement class="bar-track"><ui:VisualElement class="bar-fill bar-fill--green" style="width: 85%;" /></ui:VisualElement>
+                            <ui:Label text="85" class="stat-value" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="stat-row">
+                            <ui:VisualElement class="stat-icon" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/shield.png');" />
+                            <ui:Label text="DEFENSA" class="stat-label" />
+                            <ui:VisualElement class="bar-track"><ui:VisualElement class="bar-fill bar-fill--green" style="width: 60%;" /></ui:VisualElement>
+                            <ui:Label text="60" class="stat-value" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="stat-row">
+                            <ui:VisualElement class="stat-icon" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/clock.png');" />
+                            <ui:Label text="ENERGÍA" class="stat-label" />
+                            <ui:VisualElement class="bar-track"><ui:VisualElement class="bar-fill bar-fill--green" style="width: 90%;" /></ui:VisualElement>
+                            <ui:Label text="90" class="stat-value" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="stat-row">
+                            <ui:VisualElement class="stat-icon" style="background-image: url('project://database/Assets/_Project/UIToolkit/Theme/Icons/star.png');" />
+                            <ui:Label text="HABILIDAD" class="stat-label" />
+                            <ui:VisualElement class="bar-track"><ui:VisualElement class="bar-fill bar-fill--green" style="width: 95%;" /></ui:VisualElement>
+                            <ui:Label text="95" class="stat-value" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- paginación -->
+            <ui:VisualElement name="Dots" class="row center" style="margin-top: 16px; margin-bottom: 16px;">
+                <ui:VisualElement class="dot" style="width: 9px; height: 9px; border-radius: 999px; background-color: rgb(34,211,238); margin-left: 5px; margin-right: 5px;" />
+                <ui:VisualElement class="dot" style="width: 9px; height: 9px; border-radius: 999px; background-color: rgba(255,255,255,0.2); margin-left: 5px; margin-right: 5px;" />
+                <ui:VisualElement class="dot" style="width: 9px; height: 9px; border-radius: 999px; background-color: rgba(255,255,255,0.2); margin-left: 5px; margin-right: 5px;" />
+                <ui:VisualElement class="dot" style="width: 9px; height: 9px; border-radius: 999px; background-color: rgba(255,255,255,0.2); margin-left: 5px; margin-right: 5px;" />
+                <ui:VisualElement class="dot" style="width: 9px; height: 9px; border-radius: 999px; background-color: rgba(255,255,255,0.2); margin-left: 5px; margin-right: 5px;" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="center">
+                <ui:Button name="BtnSelect" text="SELECCIONAR" class="btn" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
