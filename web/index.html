@@ -1,270 +1,380 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ECOS DEL LABERINTO: CRONOFRAGMENTOS · UI</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="description" content="MAZE RUNNER Cronofragmentos - Juego cooperativo de laberintos para 1-4 jugadores">
+<meta name="theme-color" content="#06080f">
+<title>MAZE RUNNER - Cronofragmentos</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#06080f;--accent:#00d4ff;--gold:#ffd700;
+  --danger:#ff3355;--ok:#00ff88;--purple:#cc44ff;
+  --fn:'Fredoka One',cursive;
+  --fu:'Nunito',sans-serif;
+  --fg:'Orbitron',monospace;
+  --fm:'Share Tech Mono',monospace;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#fff;
+  font-family:var(--fu);touch-action:none;user-select:none;-webkit-user-select:none}
+canvas{display:block;position:absolute;top:0;left:0}
+#root{position:relative;width:100vw;height:100vh;overflow:hidden}
+
+/* ---- HUD ---- */
+#hud{position:absolute;top:0;left:0;right:0;height:50px;z-index:10;
+  background:rgba(6,8,15,.97);border-bottom:1px solid rgba(0,212,255,.15);
+  display:flex;align-items:center;justify-content:space-between;padding:0 10px;gap:4px}
+.hstat{display:flex;flex-direction:column;align-items:center;min-width:48px}
+.hlab{font-size:7px;color:rgba(0,212,255,.45);letter-spacing:1.5px;text-transform:uppercase;font-family:var(--fm)}
+.hval{font-family:var(--fg);font-size:13px;font-weight:700;color:var(--accent);line-height:1.1}
+.hval.g{color:var(--gold)}.hval.d{color:var(--danger)}.hval.ok{color:var(--ok)}
+#hud-char{display:flex;align-items:center;gap:5px;padding:0 4px}
+#hud-emoji{font-size:22px;transition:transform .2s}
+#hud-name{font-size:9px;color:rgba(255,255,255,.7);font-weight:700;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ---- PANTALLAS ---- */
+.screen{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;overflow-y:auto;
+  background:radial-gradient(ellipse at 50% 35%,rgba(0,40,90,.96),rgba(6,8,15,.99))}
+.screen.off{display:none!important}
+.sg{position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(0,212,255,.04) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(0,212,255,.04) 1px,transparent 1px);
+  background-size:40px 40px;animation:gs 12s linear infinite}
+@keyframes gs{from{background-position:0 0}to{background-position:40px 40px}}
+
+/* Logo */
+.logo{font-family:var(--fn);font-size:clamp(26px,7vw,56px);color:var(--accent);
+  letter-spacing:4px;text-transform:uppercase;text-shadow:0 0 50px rgba(0,212,255,.5);
+  margin-bottom:2px;text-align:center;animation:lp 3s ease-in-out infinite}
+.logo-sub{font-size:clamp(8px,2vw,11px);color:rgba(0,212,255,.4);letter-spacing:8px;
+  margin-bottom:16px;font-family:var(--fm);text-transform:uppercase}
+@keyframes lp{0%,100%{text-shadow:0 0 40px rgba(0,212,255,.4)}50%{text-shadow:0 0 80px rgba(0,212,255,.7)}}
+
+/* Botones */
+.btn{font-family:var(--fg);font-size:12px;letter-spacing:2px;padding:13px 36px;
+  border:1px solid var(--accent);background:transparent;color:var(--accent);
+  cursor:pointer;transition:all .2s;text-transform:uppercase;margin:4px;
+  display:block;width:240px;text-align:center;border-radius:3px}
+.btn:hover{background:rgba(0,212,255,.1);box-shadow:0 0 20px rgba(0,212,255,.35);transform:translateY(-1px)}
+.btn:active{transform:scale(.98)}
+.btn.prim{background:rgba(0,212,255,.12)}
+.btn.gold{border-color:var(--gold);color:var(--gold)}
+.btn.gold:hover{background:rgba(255,215,0,.1)}
+.btn.big{font-size:14px;padding:16px 44px;width:280px}
+.btn.sm{width:auto;padding:9px 18px;font-size:10px;display:inline-block}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+
+/* Personajes */
+.cg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:480px;padding:0 12px;margin:0 auto 12px}
+@media(max-width:480px){.cg{grid-template-columns:repeat(2,1fr)}}
+.cc{border:2px solid rgba(0,212,255,.15);background:rgba(0,10,25,.7);border-radius:10px;
+  padding:11px 8px;cursor:pointer;transition:all .2s;text-align:center;position:relative}
+.cc:hover{border-color:var(--accent);transform:scale(1.04)}
+.cc.sel{border-color:var(--gold);box-shadow:0 0 20px rgba(255,215,0,.3);background:rgba(20,15,0,.8)}
+.cc.lk{opacity:.5}
+.ce{font-size:30px;display:block;margin-bottom:3px;transition:transform .3s}
+.cc:hover .ce{transform:scale(1.2) rotate(-5deg)}
+.cn{font-family:var(--fn);font-size:13px;color:#fff;margin-bottom:2px}
+.ct{font-size:9px;color:rgba(0,212,255,.7);font-family:var(--fm)}
+.ck{font-size:10px;color:var(--gold);margin-top:2px}
+
+/* Inputs */
+.gi{background:rgba(0,20,40,.8);border:1px solid rgba(0,212,255,.3);color:#fff;
+  font-family:var(--fu);font-size:15px;padding:12px 16px;border-radius:6px;
+  width:260px;outline:none;transition:border-color .2s;text-align:center}
+.gi:focus{border-color:var(--accent)}
+.gi::placeholder{color:rgba(255,255,255,.3)}
+.sl{font-size:9px;color:rgba(0,212,255,.5);letter-spacing:3px;text-transform:uppercase;
+  font-family:var(--fm);margin:12px 0 5px}
+.div{width:200px;height:1px;background:rgba(0,212,255,.12);margin:12px auto}
+
+/* Selector de jugadores (segmented) */
+.seg{display:inline-flex;gap:6px;margin:4px 0 2px}
+.seg .so{width:46px;height:46px;border:1px solid rgba(0,212,255,.25);background:rgba(0,10,25,.7);
+  color:#fff;border-radius:10px;font-family:var(--fg);font-size:16px;cursor:pointer;transition:all .15s;
+  display:flex;flex-direction:column;align-items:center;justify-content:center}
+.seg .so small{font-size:6px;color:rgba(0,212,255,.55);letter-spacing:1px;font-family:var(--fm)}
+.seg .so:hover{border-color:var(--accent)}
+.seg .so.sel{border-color:var(--gold);background:rgba(255,215,0,.12);color:var(--gold);box-shadow:0 0 14px rgba(255,215,0,.25)}
+
+/* Chips de perfil / cuenta */
+#profile-chip{position:absolute;top:8px;left:10px;z-index:30;display:flex;align-items:center;gap:6px;
+  background:rgba(8,15,30,.9);border:1px solid rgba(0,212,255,.25);border-radius:20px;padding:4px 10px 4px 6px;
+  font-size:10px;color:#cfe;cursor:pointer;font-family:var(--fm)}
+#profile-chip .pe{font-size:16px}
+#profile-chip:hover{border-color:var(--accent)}
+
+/* Modal cuenta */
+.modal{position:absolute;inset:0;z-index:40;display:none;align-items:center;justify-content:center;
+  background:rgba(3,6,14,.82);backdrop-filter:blur(2px)}
+.modal.on{display:flex}
+.mcard{background:rgba(8,14,28,.98);border:1px solid rgba(0,212,255,.3);border-radius:14px;
+  padding:22px 20px;width:min(340px,92vw);text-align:center;box-shadow:0 0 50px rgba(0,80,160,.4)}
+.mcard h3{font-family:var(--fn);color:var(--accent);font-size:22px;margin-bottom:4px}
+.mcard p{font-size:11px;color:rgba(200,225,245,.6);margin-bottom:14px;line-height:1.5}
+.gbtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:#fff;color:#222;
+  border:none;border-radius:8px;padding:11px;font-family:var(--fu);font-weight:700;font-size:13px;cursor:pointer;margin-bottom:8px}
+.gbtn:hover{box-shadow:0 0 18px rgba(255,255,255,.25)}
+.gbtn .gi-logo{font-family:var(--fg);font-weight:900;font-size:15px;
+  background:conic-gradient(from -45deg,#ea4335,#fbbc05,#34a853,#4285f4,#ea4335);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.mnote{font-size:9px;color:rgba(255,180,80,.7);margin-top:8px;line-height:1.5;font-family:var(--fm)}
+.xclose{position:absolute;top:10px;right:14px;font-size:22px;color:rgba(255,255,255,.5);cursor:pointer;background:none;border:none}
+
+/* Resultados */
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:360px;margin:12px auto;padding:0 16px}
+.ri{background:rgba(0,20,40,.7);border:1px solid rgba(0,212,255,.12);border-radius:8px;padding:10px;text-align:center}
+.rv{font-family:var(--fg);font-size:18px;color:var(--accent);font-weight:700}
+.rl{font-size:9px;color:rgba(255,255,255,.5);letter-spacing:2px;margin-top:2px;text-transform:uppercase}
+.stars{font-size:28px;letter-spacing:4px;color:rgba(255,255,255,.15);margin:8px 0}
+.stars .lit{color:var(--gold)}
+.badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,215,0,.12);
+  border:1px solid rgba(255,215,0,.3);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--gold);margin:2px}
+.stitle{font-family:var(--fn);font-size:clamp(28px,6vw,50px);margin-bottom:4px;text-align:center}
+.ssub{font-size:13px;color:rgba(180,210,240,.7);margin-bottom:4px;text-align:center}
+.srec{font-size:11px;color:rgba(0,212,255,.5);letter-spacing:1px;margin:4px 0;font-family:var(--fm)}
+
+/* Leaderboard */
+.lb{max-width:320px;margin:6px auto 0;width:100%;padding:0 16px}
+.lb .lrow{display:flex;justify-content:space-between;font-family:var(--fm);font-size:11px;
+  padding:5px 10px;border-bottom:1px solid rgba(0,212,255,.08);color:rgba(220,235,250,.8)}
+.lb .lrow .lp{color:var(--gold)}
+.lb .lrow:first-child .lp{color:var(--accent)}
+
+/* ---- OVERLAYS ---- */
+#lvl-banner{position:absolute;z-index:15;left:50%;top:50%;transform:translate(-50%,-50%);
+  font-family:var(--fn);font-size:clamp(28px,8vw,60px);font-weight:700;color:var(--accent);
+  letter-spacing:6px;pointer-events:none;opacity:0;transition:opacity .5s;white-space:nowrap;
+  text-shadow:0 0 40px rgba(0,212,255,.7);text-align:center}
+#combo-pop{position:absolute;z-index:15;left:50%;transform:translateX(-50%);top:58px;
+  font-family:var(--fn);font-size:22px;color:var(--gold);pointer-events:none;
+  opacity:0;transition:opacity .15s;white-space:nowrap;text-shadow:0 0 16px rgba(255,215,0,.6)}
+#pu-bar{position:absolute;top:54px;left:8px;z-index:10;display:flex;flex-direction:column;gap:3px;pointer-events:none}
+.pu-tag{font-size:9px;padding:3px 8px;border-radius:3px;display:none;font-family:var(--fm);font-weight:700}
+.spop{position:absolute;pointer-events:none;z-index:12;font-family:var(--fn);font-size:14px;
+  font-weight:700;animation:sp 1.2s forwards;white-space:nowrap}
+@keyframes sp{0%{opacity:1;transform:translateY(0) scale(1) translateX(-50%)}
+  60%{opacity:1;transform:translateY(-44px) scale(1.15) translateX(-50%)}
+  100%{opacity:0;transform:translateY(-75px) scale(.8) translateX(-50%)}}
+#dp{position:absolute;inset:0;z-index:13;pointer-events:none;opacity:0;
+  box-shadow:inset 0 0 40px rgba(255,51,85,0);transition:opacity .2s,box-shadow .2s;border:0px solid var(--danger)}
+#dp.near{opacity:1;box-shadow:inset 0 0 60px rgba(255,51,85,.4);border-width:3px}
+
+/* Player chips (coop) */
+#pchips{position:absolute;top:54px;left:50%;transform:translateX(-50%);z-index:11;display:flex;gap:6px;pointer-events:none}
+.pchip{background:rgba(8,15,30,.9);border:1px solid rgba(0,212,255,.25);border-radius:18px;
+  padding:3px 9px 3px 6px;display:flex;align-items:center;gap:5px;font-family:var(--fm);font-size:10px}
+.pchip .pe{font-size:15px}
+.pchip .pn{color:rgba(255,255,255,.8);max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pchip .pc{color:var(--gold);font-weight:700}
+.pchip.down{border-color:var(--danger);opacity:.85}
+.pchip.down .pn{color:var(--danger)}
+.pchip.escaped{border-color:var(--ok)}
+.pchip.escaped .pn{color:var(--ok)}
+
+/* D-Pad */
+#dpad{position:absolute;bottom:12px;right:12px;z-index:10;
+  display:grid;grid-template-columns:50px 50px 50px;grid-template-rows:50px 50px 50px;gap:4px}
+.db{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:20px;cursor:pointer;touch-action:manipulation;transition:all .1s}
+.db:active,.db.dn{background:rgba(0,212,255,.22);border-color:rgba(0,212,255,.7);transform:scale(.93)}
+.de{background:transparent!important;border:none!important;cursor:default}
+
+/* Action bar */
+#act-bar{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
+.ab{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;
+  color:#fff;font-size:10px;font-family:var(--fm);letter-spacing:1px;padding:6px 12px;
+  cursor:pointer;touch-action:manipulation;transition:all .1s;display:flex;flex-direction:column;align-items:center;gap:2px}
+.ab:active{background:rgba(0,212,255,.2);transform:scale(.95)}
+.ab .ic{font-size:18px}
+
+/* Minimap */
+#mm{position:absolute;bottom:12px;left:12px;z-index:10;
+  border:1px solid rgba(0,212,255,.2);background:rgba(6,8,15,.85);opacity:.85;border-radius:4px}
+
+/* Toast */
+#toast{position:absolute;top:58px;left:50%;transform:translateX(-50%);z-index:18;
+  background:rgba(8,15,30,.97);border:1px solid var(--accent);padding:10px 22px;
+  font-size:12px;color:var(--accent);letter-spacing:1px;opacity:0;transition:opacity .3s;
+  pointer-events:none;white-space:nowrap;border-radius:4px;font-family:var(--fm)}
+#toast.on{opacity:1}
+#flash{position:absolute;inset:0;z-index:14;pointer-events:none;opacity:0;transition:opacity .06s}
+
+/* Mission pop */
+#mpop{position:absolute;top:54px;right:8px;z-index:16;
+  background:rgba(8,15,30,.97);border:1px solid rgba(0,212,255,.25);border-radius:8px;
+  padding:10px 14px;font-size:11px;color:rgba(255,255,255,.85);font-family:var(--fu);
+  max-width:200px;pointer-events:none;opacity:0;transition:opacity .4s}
+#mpop.on{opacity:1}
+#mpop .mt{font-weight:700;color:var(--gold);font-size:10px;letter-spacing:1px;margin-bottom:4px}
+#mpop .mb{height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:6px;overflow:hidden}
+#mpop .mf{height:100%;background:var(--accent);border-radius:2px;transition:width .4s}
+
+/* Pause */
+#pause{position:absolute;inset:0;z-index:25;display:none;background:rgba(4,6,14,.93);
+  align-items:center;justify-content:center;flex-direction:column;gap:12px}
+#pause.on{display:flex}
+#pause h2{font-family:var(--fn);font-size:42px;color:var(--accent);letter-spacing:6px;margin-bottom:12px}
+
+/* Exit overlay */
+#exit-marker{position:absolute;z-index:11;pointer-events:none;display:none;
+  font-size:24px;animation:ep 1.2s ease-in-out infinite;transform:translate(-50%,-50%)}
+@keyframes ep{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.3)}}
+
+#pops{position:absolute;inset:0;pointer-events:none;z-index:12;overflow:hidden}
+.fc{display:flex;flex-direction:column;align-items:center}
+.off{display:none!important}
+.muted{font-size:9px;color:rgba(100,140,180,.5);letter-spacing:2px;margin-top:12px;font-family:var(--fm);text-align:center;line-height:1.6;padding:0 12px}
+
+/* Responsive */
+@media(max-width:480px){
+  .hval{font-size:11px}.hlab{font-size:6px}.hstat{min-width:40px}
+  .btn{width:200px;font-size:11px;padding:12px 20px}.cg{gap:6px}}
+</style>
 </head>
 <body>
-<div class="bg-grid"></div>
-<div class="bg-vignette"></div>
+<div id="root">
+  <canvas id="gc"></canvas>
 
-<nav class="topnav">
-  <span class="brand">ECOS · CRONOFRAGMENTOS</span>
-  <button data-go="menu" class="active">MENÚ</button>
-  <button data-go="char">PERSONAJE</button>
-  <button data-go="world">MUNDO</button>
-  <button data-go="hud">HUD</button>
-  <button data-go="inv">INVENTARIO</button>
-  <button data-go="shop">TIENDA</button>
-  <button data-go="ach">LOGROS</button>
-</nav>
+  <!-- HUD -->
+  <div id="hud">
+    <div id="hud-char"><span id="hud-emoji">🐶</span><span id="hud-name">Max</span></div>
+    <div class="hstat"><div class="hlab">Puntos</div><div class="hval" id="hScore">0</div></div>
+    <div class="hstat"><div class="hlab">Nivel</div><div class="hval ok" id="hLevel">1</div></div>
+    <div class="hstat"><div class="hlab">Combo</div><div class="hval g" id="hCombo">x1</div></div>
+    <div class="hstat"><div class="hlab">Vidas</div><div class="hval d" id="hLives">♥♥♥</div></div>
+    <div class="hstat"><div class="hlab">Monedas</div><div class="hval g" id="hCoins">0</div></div>
+    <div class="hstat"><div class="hlab">Record</div><div class="hval" id="hBest">0</div></div>
+  </div>
 
-<div class="stage">
+  <!-- Chip de perfil -->
+  <div id="profile-chip"><span class="pe" id="pcEmoji">🐶</span><span id="pcName">Invitado</span><span style="color:var(--gold)">·</span><span id="pcWallet" style="color:var(--gold)">0🪙</span></div>
 
-  <!-- 1 · MENÚ PRINCIPAL -->
-  <section class="screen active" id="menu">
-    <div class="menu-wrap">
-      <div class="logo"><span class="glow"></span><i class="ic t-bright" data-ic="orbit"></i></div>
-      <h1 class="title-xl">ECOS DEL LABERINTO</h1>
-      <div class="title-sub">CRONOFRAGMENTOS</div>
-      <div class="menu-panel panel panel--soft">
-        <button class="menu-btn selected" data-go="hud"><i class="ic" data-ic="play"></i><span class="label">NUEVA PARTIDA</span></button>
-        <button class="menu-btn" data-go="hud"><i class="ic" data-ic="continue"></i><span class="label">CONTINUAR</span><i class="ic suffix" data-ic="cloud"></i></button>
-        <button class="menu-btn" data-go="char"><i class="ic" data-ic="people"></i><span class="label">PERSONAJES</span></button>
-        <button class="menu-btn" data-go="world"><i class="ic" data-ic="globe"></i><span class="label">MUNDOS</span></button>
-        <button class="menu-btn" data-go="inv"><i class="ic" data-ic="bag"></i><span class="label">INVENTARIO</span></button>
-        <button class="menu-btn" data-go="shop"><i class="ic" data-ic="cart"></i><span class="label">TIENDA</span></button>
-        <button class="menu-btn" data-go="ach"><i class="ic" data-ic="trophy"></i><span class="label">LOGROS</span></button>
-        <button class="menu-btn"><i class="ic" data-ic="cog"></i><span class="label">CONFIGURACIÓN</span></button>
-        <button class="menu-btn"><i class="ic" data-ic="close"></i><span class="label">SALIR</span></button>
-      </div>
-      <div class="dim" style="margin-top:18px;font-size:11px;letter-spacing:3px">v0.2 · NÚCLEO TEMPORAL</div>
-    </div>
-  </section>
+  <!-- PANTALLA PRINCIPAL -->
+  <div id="screen" class="screen">
+    <div class="sg"></div>
 
-  <!-- 2 · SELECCIÓN DE PERSONAJE -->
-  <section class="screen" id="char">
-    <div class="row"><button class="back" data-go="menu"><i class="ic" data-ic="chevron-left"></i>VOLVER</button></div>
-    <h2 class="screen-title" style="margin-bottom:24px">SELECCIÓN DE PERSONAJE</h2>
-    <div class="row" style="justify-content:center;gap:18px;flex:1;align-items:center">
-      <div class="arrow"><i class="ic" data-ic="chevron-left"></i></div>
-      <div class="panel" style="width:320px;height:380px;display:flex;align-items:center;justify-content:center;background:rgba(14,30,48,.6)">
-        <div style="width:150px;height:230px;border-radius:10px;background:rgba(34,211,238,.10);border:1px solid rgba(45,212,238,.3)"></div>
-      </div>
-      <div class="arrow" style="margin-right:24px"><i class="ic" data-ic="chevron-right"></i></div>
-      <div class="panel" style="width:460px">
-        <div class="card-title" style="font-size:30px">ARIA-7</div>
-        <div class="card-sub" style="font-size:15px">Crononauta</div>
-        <div class="card-desc" style="margin:12px 0 8px">Maestra del flujo temporal. Puede ralentizar el tiempo en áreas específicas.</div>
-        <div class="stat-row"><i class="ic" data-ic="bolt"></i><span class="stat-label">VELOCIDAD</span><span class="bar-track"><span class="bar-fill green" style="width:85%"></span></span><span class="stat-value">85</span></div>
-        <div class="stat-row"><i class="ic" data-ic="shield"></i><span class="stat-label">DEFENSA</span><span class="bar-track"><span class="bar-fill green" style="width:60%"></span></span><span class="stat-value">60</span></div>
-        <div class="stat-row"><i class="ic" data-ic="clock"></i><span class="stat-label">ENERGÍA</span><span class="bar-track"><span class="bar-fill green" style="width:90%"></span></span><span class="stat-value">90</span></div>
-        <div class="stat-row"><i class="ic" data-ic="star"></i><span class="stat-label">HABILIDAD</span><span class="bar-track"><span class="bar-fill green" style="width:95%"></span></span><span class="stat-value">95</span></div>
-      </div>
-    </div>
-    <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-    <div style="text-align:center"><button class="btn" data-go="world">SELECCIONAR</button></div>
-  </section>
+    <!-- MENU -->
+    <div id="v-menu" class="fc">
+      <div class="logo">MAZE RUNNER</div>
+      <div class="logo-sub">CRONOFRAGMENTOS v4.0 · COOP</div>
 
-  <!-- 3 · SELECCIÓN DE MUNDO -->
-  <section class="screen" id="world">
-    <div class="row"><button class="back" data-go="menu"><i class="ic" data-ic="chevron-left"></i>VOLVER</button></div>
-    <h2 class="screen-title" style="margin-bottom:24px">SELECCIÓN DE MUNDO</h2>
-    <div class="scroll">
-      <div class="grid" style="gap:24px">
-        <div class="card" style="width:360px;height:210px" data-go="hud">
-          <div class="stars"><i class="star ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i></div>
-          <div class="card-title">NEXO PRIMORDIAL</div><div class="card-sub">El Origen</div>
-          <div class="card-desc">Donde todo comenzó. Las primeras fisuras temporales.</div>
-          <div class="grow"></div>
-          <div class="row"><span class="muted grow" style="font-size:12px">Progreso</span><span class="muted" style="font-size:12px">12/12</span></div>
-          <div class="bar-track" style="margin-top:4px"><span class="bar-fill" style="width:100%"></span></div>
-        </div>
-        <div class="card purple" style="width:360px;height:210px" data-go="hud">
-          <div class="stars"><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i></div>
-          <div class="card-title" style="color:#c4b5fd">FRACTURAS DEL VACÍO</div><div class="card-sub">Dimensión Paralela</div>
-          <div class="card-desc">Realidades fragmentadas que colapsan entre sí.</div>
-          <div class="grow"></div>
-          <div class="row"><span class="muted grow" style="font-size:12px">Progreso</span><span class="muted" style="font-size:12px">8/15</span></div>
-          <div class="bar-track" style="margin-top:4px"><span class="bar-fill purple" style="width:53%"></span></div>
-        </div>
-        <div class="card" style="width:360px;height:210px" data-go="hud">
-          <div class="stars"><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i></div>
-          <div class="card-title">ESPIRAL INFINITO</div><div class="card-sub">Bucle Temporal</div>
-          <div class="card-desc">Un laberinto que se repite eternamente.</div>
-          <div class="grow"></div>
-          <div class="row"><span class="muted grow" style="font-size:12px">Progreso</span><span class="muted" style="font-size:12px">0/18</span></div>
-          <div class="bar-track" style="margin-top:4px"><span class="bar-fill" style="width:2%"></span></div>
-        </div>
-        <div class="card locked" style="width:360px;height:210px">
-          <div class="stars"><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star empty ic" data-ic="star"></i></div>
-          <div class="card-title">HORIZONTE COLAPSADO</div><div class="card-sub">El Fin de Todo</div>
-          <div class="card-desc">Donde las líneas temporales convergen y mueren.</div>
-          <div class="grow"></div>
-          <div class="row" style="gap:8px;justify-content:center"><i class="ic t-dim" data-ic="lock" style="width:18px;height:18px"></i><span class="muted" style="font-size:12px">Completa el mundo anterior</span></div>
-        </div>
-        <div class="card locked" style="width:360px;height:210px">
-          <div class="stars"><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i><i class="star ic" data-ic="star"></i></div>
-          <div class="card-title">SINGULARIDAD</div><div class="card-sub">Más Allá del Tiempo</div>
-          <div class="card-desc">El centro del laberinto. Tu destino final.</div>
-          <div class="grow"></div>
-          <div class="row" style="gap:8px;justify-content:center"><i class="ic t-dim" data-ic="lock" style="width:18px;height:18px"></i><span class="muted" style="font-size:12px">Completa el mundo anterior</span></div>
-        </div>
+      <div class="sl">Jugadores (coop local)</div>
+      <div class="seg" id="pcountSeg">
+        <button class="so sel" data-pc="1">1<small>SOLO</small></button>
+        <button class="so" data-pc="2">2<small>DUO</small></button>
+        <button class="so" data-pc="3">3<small>TRIO</small></button>
+        <button class="so" data-pc="4">4<small>SQUAD</small></button>
       </div>
-    </div>
-  </section>
 
-  <!-- 4 · HUD -->
-  <section class="screen" id="hud" style="padding:0">
-    <div class="hud-top">
-      <div class="row grow" style="gap:10px">
-        <span class="chip"><i class="ic" data-ic="clock"></i>00:42</span>
-        <span class="chip"><i class="ic t-red" data-ic="heart"></i>2</span>
-        <span class="chip"><i class="ic" data-ic="people"></i>3 / 10</span>
-        <span class="chip"><i class="ic t-bright" data-ic="gem"></i>1 / 3</span>
-      </div>
-      <div class="row" style="gap:10px">
-        <span class="chip"><i class="ic t-amber" data-ic="coin"></i><span style="color:var(--amber)">3,500</span></span>
-        <span class="chip"><i class="ic t-amber" data-ic="star"></i>1280</span>
-        <button class="arrow" style="width:38px;height:38px" data-go="menu"><i class="ic" data-ic="cog"></i></button>
-      </div>
+      <div class="sl">Nombre de explorador</div>
+      <input type="text" class="gi" id="playerName" placeholder="Tu nombre" maxlength="16" autocomplete="off">
+      <div class="sl" style="margin-top:12px">Elige tu personaje (Jugador 1)</div>
+      <div class="cg" id="charGrid"></div>
+      <div class="div"></div>
+      <button class="btn big prim" id="btnPlay">▶ EXPLORAR</button>
+      <div class="srec" id="sRec"></div>
+      <div id="lbWrap" style="margin-top:10px;width:100%"></div>
+      <div class="muted" id="ctrlHint">P1: WASD/Flechas/D-Pad · ESC pausa</div>
     </div>
-    <div class="panel hud-ability">
-      <div class="row" style="gap:12px">
-        <i class="ic t-bright" data-ic="hourglass" style="width:40px;height:40px"></i>
-        <div class="grow">
-          <div class="row"><span class="grow" style="font-size:12px;color:var(--cyan-bright);letter-spacing:1px">ECO PROLONGADO</span><span class="dim" style="font-size:12px">Q</span></div>
-          <div class="bar-track" style="margin-top:8px"><span class="bar-fill" style="width:70%"></span></div>
-        </div>
-      </div>
-    </div>
-    <div class="hud-hint">WASD MOVER · E INTERACTUAR · R REINICIAR</div>
-  </section>
 
-  <!-- 5 · INVENTARIO -->
-  <section class="screen" id="inv">
-    <div class="row">
-      <button class="back grow" style="justify-content:flex-start" data-go="menu"><i class="ic" data-ic="chevron-left"></i>VOLVER</button>
-      <span class="chip" style="margin-right:10px"><i class="ic t-amber" data-ic="coin"></i><span class="coin" style="font-size:14px">3,500</span></span>
-      <span class="chip"><i class="ic t-bright" data-ic="gem"></i><span style="color:var(--cyan-bright)">24</span></span>
+    <!-- GAME OVER -->
+    <div id="v-go" class="fc off">
+      <div class="stitle" id="goT" style="color:#ff3355">GAME OVER</div>
+      <div class="ssub" id="goS"></div>
+      <div class="stars" id="goSt"></div>
+      <div class="rg" id="goG"></div>
+      <div class="srec" id="goR"></div>
+      <div class="div"></div>
+      <button class="btn big prim" id="btnRetry">↺ REINTENTAR</button>
+      <button class="btn" id="btnGoM">⌂ MENU</button>
     </div>
-    <h2 class="screen-title" style="margin-bottom:18px">INVENTARIO</h2>
-    <div class="tabs"><button class="tab active">PERSONAJES</button><button class="tab">RELIQUIAS</button><button class="tab">COSMÉTICOS</button></div>
-    <div class="row" style="flex:1;align-items:stretch;gap:18px">
-      <div class="scroll grow">
-        <div class="grid" style="justify-content:flex-start;gap:16px">
-          <div class="card" style="width:150px;height:170px;align-items:center;justify-content:center"><i class="ic t-bright" data-ic="person" style="width:54px;height:54px"></i><div class="card-title" style="font-size:16px;margin-top:10px">NOVA</div><div class="card-sub" style="font-size:12px">Equipado</div></div>
-          <div class="card" style="width:150px;height:170px;align-items:center;justify-content:center"><i class="ic t-bright" data-ic="person" style="width:54px;height:54px"></i><div class="card-title" style="font-size:16px;margin-top:10px">ATLAS</div><div class="muted" style="font-size:12px">Desbloqueado</div></div>
-          <div class="card locked" style="width:150px;height:170px;align-items:center;justify-content:center"><i class="ic t-dim" data-ic="lock" style="width:40px;height:40px"></i><div class="card-title" style="font-size:16px;margin-top:10px">ECHO</div><div class="dim" style="font-size:12px">Bloqueado</div></div>
-          <div class="card locked" style="width:150px;height:170px;align-items:center;justify-content:center"><i class="ic t-dim" data-ic="lock" style="width:40px;height:40px"></i><div class="card-title" style="font-size:16px;margin-top:10px">CHRONA</div><div class="dim" style="font-size:12px">Legendario</div></div>
-        </div>
-      </div>
-      <div class="panel" style="width:320px;display:flex;flex-direction:column">
-        <div class="thumb" style="height:150px"><i class="ic t-bright" data-ic="person" style="width:72px;height:72px"></i></div>
-        <div class="card-title" style="font-size:24px;margin-top:14px">NOVA</div>
-        <div class="card-sub">Personaje inicial</div>
-        <div class="card-desc" style="margin-top:10px">Los ecos temporales duran más tiempo. Ideal para puzzles de sincronización larga.</div>
-        <div class="grow"></div>
-        <button class="btn disabled" style="margin-top:12px">EQUIPADO</button>
-      </div>
-    </div>
-  </section>
 
-  <!-- 6 · TIENDA -->
-  <section class="screen" id="shop">
-    <div class="row">
-      <button class="back grow" style="justify-content:flex-start" data-go="menu"><i class="ic" data-ic="chevron-left"></i>VOLVER</button>
-      <span class="chip"><i class="ic t-amber" data-ic="coin" style="width:18px;height:18px"></i><span class="coin">3,500</span></span>
+    <!-- WIN -->
+    <div id="v-win" class="fc off">
+      <div class="stitle" style="color:#ffd700">GANARON!</div>
+      <div class="ssub" id="winS"></div>
+      <div class="stars" id="winSt"></div>
+      <div class="rg" id="winG"></div>
+      <div id="winB" style="max-width:340px;text-align:center;margin:8px 0"></div>
+      <div class="div"></div>
+      <button class="btn big gold" id="btnAgain">▶ JUGAR DE NUEVO</button>
+      <button class="btn" id="btnWinM">⌂ MENU</button>
     </div>
-    <h2 class="screen-title" style="margin-bottom:18px">TIENDA</h2>
-    <div class="tabs"><button class="tab active">DESTACADOS</button><button class="tab">FRAGMENTOS</button><button class="tab">ASPECTOS</button><button class="tab">MEJORAS</button></div>
-    <div class="scroll">
-      <div class="grid" style="gap:20px">
-        <div class="card" style="width:250px;height:290px">
-          <span class="badge">-33%</span>
-          <div class="thumb"><i class="ic t-bright" data-ic="gem"></i></div>
-          <div class="card-title" style="font-size:17px;margin-top:10px">PACK CRISTAL</div>
-          <div class="card-desc">+500 Fragmentos Temporales</div><div class="grow"></div>
-          <div class="row" style="align-items:flex-end;margin-bottom:8px"><span class="price-old">600</span><span class="price-new">400</span></div>
-          <button class="btn" style="font-size:13px;padding:8px 0">COMPRAR</button>
-        </div>
-        <div class="card" style="width:250px;height:290px">
-          <div class="thumb"><i class="ic t-bright" data-ic="person"></i></div>
-          <div class="card-title" style="font-size:17px;margin-top:10px">ASPECTO: NOVA NEÓN</div>
-          <div class="card-desc">Skin holográfica para Nova</div><div class="grow"></div>
-          <div class="row" style="align-items:flex-end;margin-bottom:8px"><span class="price-new">1,200</span></div>
-          <button class="btn" style="font-size:13px;padding:8px 0">COMPRAR</button>
-        </div>
-        <div class="card purple" style="width:250px;height:290px">
-          <span class="badge">-50%</span>
-          <div class="thumb" style="background:rgba(168,85,247,.12)"><i class="ic t-purple" data-ic="person"></i></div>
-          <div class="card-title" style="font-size:17px;margin-top:10px;color:#c4b5fd">ASPECTO: ATLAS VOID</div>
-          <div class="card-desc">Skin legendaria del vacío</div><div class="grow"></div>
-          <div class="row" style="align-items:flex-end;margin-bottom:8px"><span class="price-old">2,000</span><span class="price-new">1,000</span></div>
-          <button class="btn" style="font-size:13px;padding:8px 0">COMPRAR</button>
-        </div>
-        <div class="card" style="width:250px;height:290px">
-          <div class="thumb"><i class="ic t-green" data-ic="orbit"></i></div>
-          <div class="card-title" style="font-size:17px;margin-top:10px">NÚCLEO TEMPORAL</div>
-          <div class="card-desc">Reliquia: +1 eco simultáneo</div><div class="grow"></div>
-          <div class="row" style="align-items:flex-end;margin-bottom:8px"><span class="price-new">3,000</span></div>
-          <button class="btn" style="font-size:13px;padding:8px 0">COMPRAR</button>
-        </div>
-      </div>
-      <div class="card gold row" style="margin-top:20px;align-items:center;gap:18px;padding:18px">
-        <i class="ic t-amber" data-ic="gift" style="width:48px;height:48px"></i>
-        <div class="grow">
-          <div class="card-title" style="font-size:18px;color:var(--amber)">OFERTA ESPECIAL · PACK CRONOS</div>
-          <div class="card-desc" style="margin-top:2px">Todos los aspectos al -40% · Termina en 23:59:59</div>
-        </div>
-        <button class="btn gold">COMPRAR</button>
-      </div>
-    </div>
-  </section>
+  </div>
 
-  <!-- 7 · LOGROS -->
-  <section class="screen" id="ach">
-    <div class="row"><button class="back" data-go="menu"><i class="ic" data-ic="chevron-left"></i>VOLVER</button></div>
-    <h2 class="screen-title" style="margin-bottom:8px">LOGROS</h2>
-    <div class="panel panel--soft" style="margin-bottom:18px">
-      <div class="row" style="margin-bottom:8px"><span class="grow" style="font-size:13px;color:var(--cyan-bright);letter-spacing:2px">PROGRESO TOTAL</span><span class="muted" style="font-size:13px">8 / 25 DESBLOQUEADOS</span></div>
-      <div class="bar-track" style="height:10px"><span class="bar-fill" style="width:32%"></span></div>
+  <!-- Modal cuenta -->
+  <div id="acctModal" class="modal">
+    <div class="mcard" style="position:relative">
+      <button class="xclose" id="acctClose">×</button>
+      <h3>Tu cuenta</h3>
+      <p>Guarda tu progreso, monedas y logros en este dispositivo. Inicia sesión con Google para sincronizar tu nombre y avatar.</p>
+      <button class="gbtn" id="btnGoogle"><span class="gi-logo">G</span> Continuar con Google</button>
+      <div class="div" style="width:100%;margin:12px 0"></div>
+      <div class="sl" style="margin:0 0 6px">o usa un correo (local)</div>
+      <input type="email" class="gi" id="acctEmail" placeholder="tucorreo@ejemplo.com" style="width:100%;margin-bottom:8px">
+      <button class="btn sm prim" id="btnEmailLogin" style="width:100%">GUARDAR CUENTA</button>
+      <button class="btn sm" id="btnGuest" style="width:100%;margin-top:8px">Seguir como invitado</button>
+      <div class="mnote" id="googleNote"></div>
     </div>
-    <div class="scroll">
-      <div class="grid" style="justify-content:flex-start;gap:16px">
-        <div class="card row" style="width:380px;height:96px;align-items:center;gap:14px"><i class="ic t-bright" data-ic="people" style="width:44px;height:44px"></i><div class="grow"><div class="card-title" style="font-size:16px">PRIMER ECO</div><div class="card-desc" style="margin-top:2px">Crea tu primer eco temporal.</div></div><i class="ic t-green" data-ic="trophy" style="width:22px;height:22px"></i></div>
-        <div class="card row" style="width:380px;height:96px;align-items:center;gap:14px"><i class="ic t-bright" data-ic="gem" style="width:44px;height:44px"></i><div class="grow"><div class="card-title" style="font-size:16px">COLECCIONISTA</div><div class="card-desc" style="margin-top:2px">Recoge 50 cristales temporales.</div></div><i class="ic t-green" data-ic="trophy" style="width:22px;height:22px"></i></div>
-        <div class="card row locked" style="width:380px;height:96px;align-items:center;gap:14px"><i class="ic t-dim" data-ic="shield" style="width:44px;height:44px"></i><div class="grow"><div class="card-title" style="font-size:16px">SIN MORIR</div><div class="card-desc" style="margin-top:2px">Completa un mundo sin morir.</div></div><i class="ic t-dim" data-ic="lock" style="width:22px;height:22px"></i></div>
-        <div class="card row locked" style="width:380px;height:96px;align-items:center;gap:14px"><i class="ic t-dim" data-ic="clock" style="width:44px;height:44px"></i><div class="grow"><div class="card-title" style="font-size:16px">MAESTRO TEMPORAL</div><div class="card-desc" style="margin-top:2px">Consigue 3 estrellas en 10 niveles.</div></div><i class="ic t-dim" data-ic="lock" style="width:22px;height:22px"></i></div>
-        <div class="card row" style="width:380px;height:96px;align-items:center;gap:14px"><i class="ic t-bright" data-ic="bolt" style="width:44px;height:44px"></i><div class="grow"><div class="card-title" style="font-size:16px">VELOCISTA</div><div class="card-desc" style="margin-top:2px">Completa un nivel en menos de 30s.</div></div><i class="ic t-green" data-ic="trophy" style="width:22px;height:22px"></i></div>
-        <div class="card row locked" style="width:380px;height:96px;align-items:center;gap:14px"><i class="ic t-dim" data-ic="crown" style="width:44px;height:44px"></i><div class="grow"><div class="card-title" style="font-size:16px">DOMINADOR DEL TIEMPO</div><div class="card-desc" style="margin-top:2px">Completa todos los mundos al 100%.</div></div><i class="ic t-dim" data-ic="lock" style="width:22px;height:22px"></i></div>
-      </div>
-    </div>
-  </section>
+  </div>
 
+  <!-- OVERLAYS -->
+  <div id="lvl-banner"></div>
+  <div id="combo-pop"></div>
+  <div id="flash"></div>
+  <div id="toast"></div>
+  <div id="dp"></div>
+  <div id="pchips"></div>
+  <div id="exit-marker">🚪</div>
+
+  <!-- Power-up bar -->
+  <div id="pu-bar">
+    <div class="pu-tag" id="puS" style="background:rgba(0,100,255,.2);border:1px solid #0af;color:#0af">⚡ SPEED</div>
+    <div class="pu-tag" id="puG" style="background:rgba(200,0,255,.2);border:1px solid #f0f;color:#f0f">👻 GHOST</div>
+    <div class="pu-tag" id="puM" style="background:rgba(255,220,0,.15);border:1px solid #fd0;color:#fd0">🧲 IMAN</div>
+    <div class="pu-tag" id="puF" style="background:rgba(0,255,255,.12);border:1px solid #0ff;color:#0ff">❄ FREEZE</div>
+  </div>
+
+  <!-- Mission pop -->
+  <div id="mpop">
+    <div class="mt">🎯 MISION DIARIA</div>
+    <div id="mDesc">Recoge 50 monedas</div>
+    <div class="mb"><div class="mf" id="mFill" style="width:0%"></div></div>
+  </div>
+
+  <div id="pops"></div>
+  <canvas id="mm"></canvas>
+
+  <!-- D-Pad -->
+  <div id="dpad">
+    <div class="de"></div><div class="db" id="dU">▲</div><div class="de"></div>
+    <div class="db" id="dL">◀</div><div class="de"></div><div class="db" id="dR">▶</div>
+    <div class="de"></div><div class="db" id="dD">▼</div><div class="de"></div>
+  </div>
+
+  <!-- Action bar -->
+  <div id="act-bar">
+    <button class="ab" id="actP"><span class="ic">⏸</span>PAUSA</button>
+    <button class="ab" id="actM"><span class="ic">🗺</span>MAPA</button>
+    <button class="ab" id="actH">⌂</button>
+  </div>
+
+  <!-- Pause panel -->
+  <div id="pause">
+    <h2>PAUSA</h2>
+    <div id="pChar" style="font-size:48px;margin-bottom:8px">🐶</div>
+    <div id="pName" style="font-family:'Fredoka One',cursive;font-size:20px;color:var(--gold);margin-bottom:16px"></div>
+    <button class="btn big prim" id="btnR2">▶ CONTINUAR</button>
+    <button class="btn" id="btnRst">↺ REINICIAR</button>
+    <button class="btn" id="btnPM">⌂ MENU</button>
+  </div>
 </div>
 
-<script>
-  // iconos: máscara desde PNG blanco
-  document.querySelectorAll('.ic[data-ic]').forEach(el=>{
-    const u=`assets/icons/${el.dataset.ic}.png`;
-    el.style.webkitMaskImage=`url(${u})`; el.style.maskImage=`url(${u})`;
-  });
-  // navegación entre pantallas
-  function go(id){
-    document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
-    document.querySelectorAll('.topnav button').forEach(b=>b.classList.toggle('active',b.dataset.go===id));
-    const st=document.querySelector('.stage'); if(st) st.scrollTop=0;
-  }
-  document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go)));
-  // teclas 1-7
-  const order=['menu','char','world','hud','inv','shop','ach'];
-  addEventListener('keydown',e=>{const n=parseInt(e.key);if(n>=1&&n<=7)go(order[n-1]);});
-</script>
+<script src="game.js"></script>
 </body>
 </html>
